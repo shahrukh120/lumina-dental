@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Stethoscope } from 'lucide-react';
-
+import API_BASE_URL from '../config'
 // 1. Define the shape of data coming from MongoDB
 interface Service {
   _id: string;
@@ -17,7 +17,7 @@ const Services: React.FC = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/services");
+        const res = await fetch(`${API_BASE_URL}/api/services`);
         const data = await res.json();
         setServices(data);
       } catch (error) {

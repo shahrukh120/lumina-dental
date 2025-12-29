@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Maximize2 } from 'lucide-react';
-
+import API_BASE_URL from '../config';
 const categories = ['All', 'Clinic', 'Patients', 'Treatments', 'Working'];
 
 interface GalleryItem {
@@ -19,7 +19,7 @@ const Gallery: React.FC = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/gallery");
+        const res = await fetch(`${API_BASE_URL}/api/gallery`);
         const data = await res.json();
         setItems(data);
       } catch (error) {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, LogOut, ArrowLeft, Image as ImageIcon, X, Upload, LayoutGrid, Stethoscope } from 'lucide-react';
+import API_BASE_URL from '../config';
 
 interface Item {
   _id: string;
@@ -28,7 +29,7 @@ const AdminDashboard: React.FC = () => {
   const fetchItems = async () => {
     const endpoint = activeTab === 'services' ? 'services' : 'gallery';
     try {
-      const res = await fetch(`http://localhost:3001/api/${endpoint}`);
+      const res = await fetch(`${API_BASE_URL}/api/${endpoint}`);
       const data = await res.json();
       setItems(data);
     } catch (error) {
@@ -48,7 +49,7 @@ const AdminDashboard: React.FC = () => {
     if (imageFile) formData.append('image', imageFile);
 
     try {
-      const res = await fetch(`http://localhost:3001/api/${endpoint}`, {
+      const res = await fetch(`${API_BASE_URL}/api/${endpoint}`, {
         method: "POST",
         headers: { "Authorization": `Bearer ${token}` },
         body: formData
@@ -72,7 +73,7 @@ const AdminDashboard: React.FC = () => {
     const endpoint = activeTab === 'services' ? 'services' : 'gallery';
     const token = localStorage.getItem('adminToken');
     
-    await fetch(`http://localhost:3001/api/${endpoint}/${id}`, {
+    await fetch(`${API_BASE_URL}/api/${endpoint}/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` }
     });
