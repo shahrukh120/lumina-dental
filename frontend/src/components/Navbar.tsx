@@ -1,5 +1,5 @@
 import React from 'react';
-
+import API_BASE_URL from '../config';
 interface NavbarProps {
   isScrolled: boolean;
 }
@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
     if (!email) return;
 
     try {
-      const response = await fetch('http://localhost:3001/api/admin/verify', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
