@@ -1,0 +1,7 @@
+
+@import "tailwindcss";
+@config "../tailwind.config.js";
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}

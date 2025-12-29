@@ -1,0 +1,7 @@
+{
+  "name": "Lumina Dental Studio - Dr. Md S T Khan",
+  "description": "High-end dental practice led by Dr. Md S T Khan, specializing in Maxillofacial Radiology, Surgery, and Periodontology. Modern care with AMU excellence.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
