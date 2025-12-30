@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Maximize2 } from 'lucide-react';
 import API_BASE_URL from '../config';
+
 const categories = ['All', 'Clinic', 'Patients', 'Treatments', 'Working'];
 
 interface GalleryItem {
@@ -45,7 +46,11 @@ const Gallery: React.FC = () => {
             <p className="text-slate-600 font-light">See the technology we use and the transformations we achieve every single day.</p>
           </div>
           
-          <div className="flex bg-slate-100 p-1.5 rounded-2xl overflow-x-auto">
+          {/* UPDATED CONTAINER: Added w-full, max-w-full and scrollbar hiding styles */}
+          <div 
+            className="flex bg-slate-100 p-1.5 rounded-2xl overflow-x-auto w-full md:w-auto max-w-full"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {categories.map(cat => (
               <button
                 key={cat}

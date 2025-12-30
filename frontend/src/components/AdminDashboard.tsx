@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, LogOut, ArrowLeft, Image as ImageIcon, X, Upload, LayoutGrid, Stethoscope } from 'lucide-react';
+import { Plus, Trash2, LogOut, ArrowLeft, Image as ImageIcon, X, Upload, LayoutGrid, Stethoscope, Loader2 } from 'lucide-react';
 import API_BASE_URL from '../config';
 
 interface Item {
   _id: string;
   title: string;
-  description?: string; // Only for services
-  category?: string;    // Only for gallery
+  description?: string;
+  category?: string;
   image: string;
 }
 
@@ -15,10 +15,13 @@ const AdminDashboard: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   
+  // New Loading State
+  const [isUploading, setIsUploading] = useState(false);
+  
   // Form State
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Clinic'); // Default category
+  const [category, setCategory] = useState('Clinic');
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   // Fetch Data based on active tab
@@ -39,6 +42,10 @@ const AdminDashboard: React.FC = () => {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 1. Start Loading
+    setIsUploading(true);
+    
     const token = localStorage.getItem('adminToken');
     const endpoint = activeTab === 'services' ? 'services' : 'gallery';
 
@@ -61,10 +68,16 @@ const AdminDashboard: React.FC = () => {
         setDescription('');
         setImageFile(null);
         fetchItems();
-        alert(`${activeTab === 'services' ? 'Service' : 'Photo'} added!`);
+        // alert is removed to make it smoother, usually the modal closing is enough feedback
+      } else {
+        alert("Failed to upload. Please try again.");
       }
     } catch (error) {
       console.error("Error adding item:", error);
+      alert("Error connecting to server.");
+    } finally {
+      // 2. Stop Loading (whether success or fail)
+      setIsUploading(false);
     }
   };
 
@@ -155,20 +168,22 @@ const AdminDashboard: React.FC = () => {
         {/* Dynamic Modal */}
         {isAdding && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-xl bg-slate-950/60">
-            <div className="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl relative">
-              <button onClick={() => setIsAdding(false)} className="absolute top-8 right-8 text-slate-400 hover:text-slate-600"><X size={24} /></button>
+            <div className="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl relative overflow-hidden">
+              {/* Disable Close button while uploading */}
+              <button disabled={isUploading} onClick={() => setIsAdding(false)} className="absolute top-8 right-8 text-slate-400 hover:text-slate-600 disabled:opacity-50"><X size={24} /></button>
               <h2 className="text-2xl font-bold mb-8 text-slate-900 capitalize">Add {activeTab} Item</h2>
               
               <form onSubmit={handleAdd} className="space-y-5">
-                <input required placeholder="Title" className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500"
+                <input required disabled={isUploading} placeholder="Title" className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                   value={title} onChange={e => setTitle(e.target.value)} />
                 
                 {activeTab === 'services' ? (
-                  <textarea required placeholder="Description..." rows={4} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500"
+                  <textarea required disabled={isUploading} placeholder="Description..." rows={4} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                     value={description} onChange={e => setDescription(e.target.value)} />
                 ) : (
                   <select 
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500"
+                    disabled={isUploading}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                     value={category}
                     onChange={e => setCategory(e.target.value)}
                   >
@@ -181,15 +196,30 @@ const AdminDashboard: React.FC = () => {
                 )}
                 
                 <div className="relative">
-                  <input type="file" accept="image/*" required onChange={(e) => e.target.files && setImageFile(e.target.files[0])}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 pl-12 outline-none focus:ring-2 focus:ring-indigo-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                  <input type="file" accept="image/*" required disabled={isUploading} onChange={(e) => e.target.files && setImageFile(e.target.files[0])}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 pl-12 outline-none focus:ring-2 focus:ring-indigo-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 disabled:opacity-50"
                   />
                   <Upload size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" />
                 </div>
 
-                <button type="submit" className="w-full bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100">
-                  Save to Database
-                </button>
+                {/* 3. CONDITIONAL RENDERING: Button vs Loading Bar */}
+                {isUploading ? (
+                  <div className="w-full bg-slate-100 rounded-2xl h-[60px] flex items-center px-6 relative overflow-hidden border border-slate-200">
+                    {/* Animated Striped Background */}
+                    <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(79,70,229,0.1)_25%,rgba(79,70,229,0.1)_50%,transparent_50%,transparent_75%,rgba(79,70,229,0.1)_75%,rgba(79,70,229,0.1)_100%)] bg-[length:40px_40px] animate-[pulse_1s_linear_infinite]"></div>
+                    {/* Progress Bar Fill Animation */}
+                    <div className="absolute top-0 left-0 h-full bg-indigo-600/10 w-full animate-[shimmer_2s_infinite]"></div>
+                    
+                    <span className="relative z-10 text-indigo-700 font-bold mx-auto flex items-center gap-3">
+                      <Loader2 className="animate-spin" size={20} />
+                      Uploading to Server...
+                    </span>
+                  </div>
+                ) : (
+                  <button type="submit" className="w-full bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100">
+                    Save to Database
+                  </button>
+                )}
               </form>
             </div>
           </div>
