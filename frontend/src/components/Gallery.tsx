@@ -13,11 +13,14 @@ interface GalleryItem {
 
 const Gallery: React.FC = () => {
   const [activeTab, setActiveTab] = useState('All');
-  const [isExpanded, setIsExpanded] = useState(false); // Controls "Explore Full Gallery" list
-  const [items, setItems] = useState<GalleryItem[]>([]);
   
-  // 1. NEW STATE: Track the specific image clicked for the lightbox
+  // 1. Controls the "Full Gallery" Popup
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // 2. Controls the "Single Image" Lightbox
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  
+  const [items, setItems] = useState<GalleryItem[]>([]);
 
   // FETCH FROM DB
   useEffect(() => {
@@ -37,7 +40,8 @@ const Gallery: React.FC = () => {
     ? items 
     : items.filter(item => item.category === activeTab);
 
-  const displayItems = isExpanded ? filteredItems : filteredItems.slice(0, 6);
+  // Show only first 6 on the landing page
+  const displayItems = filteredItems.slice(0, 6);
 
   return (
     <section id="gallery" className="py-24 bg-white scroll-mt-20">
@@ -69,7 +73,7 @@ const Gallery: React.FC = () => {
           </div>
         </div>
         
-        {/* Gallery Grid */}
+        {/* LANDING PAGE GRID (Max 6 Items) */}
         {items.length === 0 ? (
           <div className="text-center py-20 text-slate-400 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
             No photos in gallery yet. Add some from the Admin Console!
@@ -79,7 +83,7 @@ const Gallery: React.FC = () => {
             {displayItems.map(item => (
               <div 
                 key={item._id} 
-                onClick={() => setSelectedImage(item)} // 2. ADD CLICK HANDLER
+                onClick={() => setSelectedImage(item)}
                 className="group relative rounded-[2.5rem] overflow-hidden aspect-square cursor-pointer border border-slate-100 shadow-sm"
               >
                 <img 
@@ -98,8 +102,8 @@ const Gallery: React.FC = () => {
           </div>
         )}
 
-        {/* Show More Button */}
-        {!isExpanded && items.length > 6 && (
+        {/* BUTTON: Opens the Full Gallery Modal */}
+        {filteredItems.length > 6 && (
           <div className="mt-16 flex justify-center">
             <button 
               onClick={() => setIsExpanded(true)}
@@ -111,7 +115,7 @@ const Gallery: React.FC = () => {
           </div>
         )}
 
-        {/* Full Gallery Expanded View (The List View) */}
+        {/* --- MODAL 1: FULL GALLERY VIEW (Z-INDEX 100) --- */}
         {isExpanded && (
           <div className="fixed inset-0 z-[100] bg-white overflow-y-auto px-6 py-12 animate-in fade-in zoom-in duration-300">
             <div className="max-w-7xl mx-auto">
@@ -125,14 +129,19 @@ const Gallery: React.FC = () => {
                 </button>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-20">
                 {filteredItems.map(item => (
                   <div 
                     key={`full-${item._id}`} 
-                    onClick={() => setSelectedImage(item)} // 2. CLICK HANDLER HERE TOO
-                    className="rounded-3xl overflow-hidden aspect-square shadow-md border border-slate-100 cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1"
+                    onClick={() => setSelectedImage(item)} // Clicking here opens Lightbox
+                    className="rounded-3xl overflow-hidden aspect-square shadow-md border border-slate-100 cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 group relative"
                   >
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                    <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    
+                    {/* Hover Overlay for Title */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <p className="text-white font-bold px-4 text-center">{item.title}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -140,13 +149,12 @@ const Gallery: React.FC = () => {
           </div>
         )}
 
-        {/* 3. NEW: Single Image Lightbox Modal */}
+        {/* --- MODAL 2: SINGLE IMAGE LIGHTBOX (Z-INDEX 200 - HIGHEST) --- */}
         {selectedImage && (
           <div 
             className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
-            onClick={() => setSelectedImage(null)} // Click outside to close
+            onClick={() => setSelectedImage(null)}
           >
-            {/* Close Button */}
             <button 
               onClick={() => setSelectedImage(null)}
               className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all"
@@ -154,10 +162,9 @@ const Gallery: React.FC = () => {
               <X size={32} />
             </button>
             
-            {/* Image Container */}
             <div 
               className="relative max-w-6xl max-h-[90vh] flex flex-col items-center" 
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
+              onClick={(e) => e.stopPropagation()}
             >
               <img 
                 src={selectedImage.image} 
