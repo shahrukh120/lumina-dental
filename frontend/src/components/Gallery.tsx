@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Maximize2 } from 'lucide-react';
 import API_BASE_URL from '../config';
 
-const categories = ['All', 'Clinic', 'Patients', 'Treatments', 'Working'];
+const categories = ['All', 'Clinic', 'Patients', 'Treatments', 'Working','Technology'];
 
 interface GalleryItem {
   _id: string;
