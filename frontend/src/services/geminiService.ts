@@ -2,7 +2,7 @@ type ChatMessage = {
   role: "user" | "model";
   text: string;
 };
-
+import API_BASE_URL from '../config';
 
 
 // frontend/src/services/geminiService.ts
@@ -21,7 +21,7 @@ export const sendMessageToGemini = async (prompt: string, history: any[]) => {
       }))
     };
 
-    const response = await fetch("http://localhost:3001/api/gemini", {
+    const response = await fetch(`${API_BASE_URL}/api/gemini`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
