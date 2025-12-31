@@ -11,7 +11,7 @@ const SmileAssistant: React.FC = () => {
   // State definitions
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: "Hello! I'm Dr. Reed's virtual consultant. How can I help you with your smile today?" }
+    { role: 'model', text: "Hello! I'm Dr. Md suleman's virtual consultant. How can I help you with your smile today?" }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
