@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Maximize2 } from 'lucide-react';
 import API_BASE_URL from '../config';
 
-const categories = ['All', 'Clinic', 'Patients', 'Treatments', 'Working','Technology'];
+const categories = ['All', 'Clinic', 'Patients', 'Treatments', 'Working', 'Technology'];
 
 interface GalleryItem {
   _id: string;
@@ -13,8 +13,11 @@ interface GalleryItem {
 
 const Gallery: React.FC = () => {
   const [activeTab, setActiveTab] = useState('All');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); // Controls "Explore Full Gallery" list
   const [items, setItems] = useState<GalleryItem[]>([]);
+  
+  // 1. NEW STATE: Track the specific image clicked for the lightbox
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
   // FETCH FROM DB
   useEffect(() => {
@@ -46,7 +49,6 @@ const Gallery: React.FC = () => {
             <p className="text-slate-600 font-light">See the technology we use and the transformations we achieve every single day.</p>
           </div>
           
-          {/* UPDATED CONTAINER: Added w-full, max-w-full and scrollbar hiding styles */}
           <div 
             className="flex bg-slate-100 p-1.5 rounded-2xl overflow-x-auto w-full md:w-auto max-w-full"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -75,7 +77,11 @@ const Gallery: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {displayItems.map(item => (
-              <div key={item._id} className="group relative rounded-[2.5rem] overflow-hidden aspect-square cursor-pointer border border-slate-100 shadow-sm">
+              <div 
+                key={item._id} 
+                onClick={() => setSelectedImage(item)} // 2. ADD CLICK HANDLER
+                className="group relative rounded-[2.5rem] overflow-hidden aspect-square cursor-pointer border border-slate-100 shadow-sm"
+              >
                 <img 
                   src={item.image} 
                   alt={item.title} 
@@ -105,7 +111,7 @@ const Gallery: React.FC = () => {
           </div>
         )}
 
-        {/* Full Gallery Expanded View */}
+        {/* Full Gallery Expanded View (The List View) */}
         {isExpanded && (
           <div className="fixed inset-0 z-[100] bg-white overflow-y-auto px-6 py-12 animate-in fade-in zoom-in duration-300">
             <div className="max-w-7xl mx-auto">
@@ -121,7 +127,11 @@ const Gallery: React.FC = () => {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredItems.map(item => (
-                  <div key={`full-${item._id}`} className="rounded-3xl overflow-hidden aspect-square shadow-md border border-slate-100">
+                  <div 
+                    key={`full-${item._id}`} 
+                    onClick={() => setSelectedImage(item)} // 2. CLICK HANDLER HERE TOO
+                    className="rounded-3xl overflow-hidden aspect-square shadow-md border border-slate-100 cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1"
+                  >
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                   </div>
                 ))}
@@ -129,6 +139,39 @@ const Gallery: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* 3. NEW: Single Image Lightbox Modal */}
+        {selectedImage && (
+          <div 
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+            onClick={() => setSelectedImage(null)} // Click outside to close
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all"
+            >
+              <X size={32} />
+            </button>
+            
+            {/* Image Container */}
+            <div 
+              className="relative max-w-6xl max-h-[90vh] flex flex-col items-center" 
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
+            >
+              <img 
+                src={selectedImage.image} 
+                alt={selectedImage.title} 
+                className="max-h-[80vh] w-auto object-contain rounded-lg shadow-2xl" 
+              />
+              <div className="mt-6 text-center">
+                <span className="text-indigo-400 text-sm font-bold uppercase tracking-widest">{selectedImage.category}</span>
+                <h3 className="text-white text-2xl font-bold mt-2">{selectedImage.title}</h3>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </section>
   );
