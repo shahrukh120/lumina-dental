@@ -15,7 +15,7 @@ const Hero: React.FC = () => {
       <div className="absolute top-0 right-0 w-1/2 h-full hidden lg:block z-10">
         <div className="absolute inset-0 bg-linear-to-r from-slate-50 via-transparent to-transparent z-10" />
         <img
-          src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2070&auto=format&fit=crop"
+          src="hero.jpeg"
           alt="Modern Dental Studio"
           className="w-full h-full object-cover grayscale-[0.2] contrast-[1.05]"
         />
@@ -43,9 +43,9 @@ const Hero: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             {/* UPDATED: Changed button to anchor tag for navigation */}
-<a 
-  href="#contact" 
-  className="
+            <a
+              href="#contact"
+              className="
     inline-flex items-center justify-center
     bg-indigo-600 text-white
     px-8 py-4
@@ -59,11 +59,11 @@ const Hero: React.FC = () => {
     active:scale-95
     text-center
   "
->
-  Book a Consultation
-</a>
+            >
+              Book a Consultation
+            </a>
 
-            
+
             <button className="flex items-center gap-3 px-8 py-4 text-slate-700 font-semibold hover:text-indigo-600 transition-colors group">
               <span className="w-12 h-12 flex items-center justify-center rounded-full border border-slate-200 group-hover:border-indigo-600 transition-all group-hover:bg-indigo-50">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
