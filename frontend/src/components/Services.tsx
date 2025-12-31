@@ -71,10 +71,7 @@ const Services: React.FC = () => {
               >
                 <div className="h-48 overflow-hidden relative">
                   <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-2xl text-indigo-600 shadow-sm">
-                    {/* Default Icon for dynamic services */}
-                    <Stethoscope className="w-8 h-8" />
-                  </div>
+
                 </div>
                 <div className="p-8">
                   <h3 className="text-xl font-bold text-slate-900 mb-4 capitalize">{service.title}</h3>
