@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown'; // 1. Import this
 import { sendMessageToGemini } from '../services/geminiService'; 
 
-// Define the interface locally
 interface Message {
   role: 'user' | 'model';
   text: string;
 }
 
 const SmileAssistant: React.FC = () => {
-  // State definitions
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'model', text: "Hello! I'm Dr. Md suleman's virtual consultant. How can I help you with your smile today?" }
@@ -17,7 +16,6 @@ const SmileAssistant: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -36,10 +34,9 @@ const SmileAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // FIX: Map using 'text' instead of 'parts' to match geminiService signature
       const historyForService = newHistory.map(msg => ({
         role: msg.role,
-        text: msg.text  // <--- This was 'parts', changed to 'text'
+        text: msg.text
       }));
 
       const responseText = await sendMessageToGemini(userText, historyForService);
@@ -96,16 +93,28 @@ const SmileAssistant: React.FC = () => {
         <div ref={scrollRef} className="flex-1 p-6 overflow-y-auto space-y-4 bg-slate-50">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${
+              <div className={`max-w-[85%] p-4 rounded-2xl text-sm ${
                 msg.role === 'user' 
                   ? 'bg-indigo-600 text-white rounded-tr-none' 
                   : 'bg-white text-slate-700 shadow-sm rounded-tl-none border border-slate-200'
               }`}>
-                {/* Changed from msg.content to msg.text */}
-                {msg.text}
+                {/* 2. REPLACED TEXT WITH REACT MARKDOWN COMPONENT */}
+                <ReactMarkdown
+                  components={{
+                    p: ({node, ...props}) => <p className={`mb-2 last:mb-0 ${msg.role === 'user' ? 'text-white' : 'text-slate-700'}`} {...props} />,
+                    strong: ({node, ...props}) => <span className="font-bold" {...props} />,
+                    ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+                    ol: ({node, ...props}) => <ol className="list-decimal pl-4 mb-2 space-y-1" {...props} />,
+                    li: ({node, ...props}) => <li className="" {...props} />,
+                    a: ({node, ...props}) => <a className="underline hover:text-indigo-500" {...props} />,
+                  }}
+                >
+                  {msg.text}
+                </ReactMarkdown>
               </div>
             </div>
           ))}
+          
           {isLoading && (
             <div className="flex justify-start">
               <div className="bg-white p-4 rounded-2xl shadow-sm rounded-tl-none border border-slate-200 flex gap-1">
