@@ -35,7 +35,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-const ADMIN_EMAIL = "mdsulemantarique@gmail.com";
+const ADMIN_EMAIL = "mdsulemanarchie@gmail.com";
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/lumina_dental';

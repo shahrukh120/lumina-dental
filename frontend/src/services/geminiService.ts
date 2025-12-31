@@ -1,19 +1,47 @@
+import API_BASE_URL from '../config';
+
 type ChatMessage = {
   role: "user" | "model";
   text: string;
 };
-import API_BASE_URL from '../config';
 
+// --- 1. FILL IN YOUR REAL DETAILS HERE ---
+const CLINIC_DETAILS = `
+CLINIC INFO:
+- Doctor: Dr. Md S T Khan (Expert in Dental Procedures, Maxillofacial Surgery, Radiology)
+- Clinic Name: Dental & Maxillofacial Clinic
+- Location: Apoorva Hospital And Research Centre Pvt Ltd in Bansdih Road Area Ballia, Uttar Pradesh
+- Phone: +91 87917 85177 
+- Email: mdsulemanarchie@gmail.com
+- Timings: Mon - Sat: 10:00 AM - 5:00 PM , Sunday: Only Emergency
 
-// frontend/src/services/geminiService.ts
-// geminiService.ts
-// frontend/src/services/geminiService.ts
+KEY SERVICES:
+- Dental Implants
+- Root Canal Treatment
+- Orthodontics (Braces/Aligners)
+- Maxillofacial Surgery
+- Cosmetic Dentistry (Veneers, Whitening)
+- Radiology & Diagnostics
+- TOOTH EXTRACTION
+`;
+
 export const sendMessageToGemini = async (prompt: string, history: any[]) => {
   try {
     const payload = {
-      // System instructions tell the AI how to behave
+      // System instructions now include the specific details above
       system_instruction: {
-        parts: [{ text: "You are a helpful virtual assistant for Dental & maxillofacial clinic, managed by Dr. Md S T Khan. Provide professional, friendly dental advice and encourage users to book a consultation for specific medical concerns." }]
+        parts: [{ 
+          text: `You are a helpful, professional virtual assistant for Dr. Md S T Khan's clinic. 
+          
+          Here are the specific details you MUST use when answering questions:
+          ${CLINIC_DETAILS}
+          
+          Guidelines:
+          1. If asked for contact info, provide the exact phone number and address listed above.
+          2. Keep answers concise and friendly.
+          3. Always encourage booking a consultation for specific medical advice.
+          4. Do not invent placeholder numbers.` 
+        }]
       },
       contents: history.map(msg => ({
         role: msg.role === 'model' ? 'model' : 'user',
