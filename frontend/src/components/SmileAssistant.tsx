@@ -85,7 +85,7 @@ const SmileAssistant: React.FC = () => {
             </div>
             <div>
               <h4 className="font-bold text-lg">Smile Consultant</h4>
-              <p className="text-xs text-indigo-100">Powered by Lumina AI</p>
+              <p className="text-xs text-indigo-100">Powered by Gemini 2.5 flash</p>
             </div>
           </div>
         </div>
