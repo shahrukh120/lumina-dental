@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, MapPin, Clock, Send } from 'lucide-react';
+import { MessageSquare, MapPin, Clock } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -10,13 +10,10 @@ const Contact: React.FC = () => {
     message: ''
   });
 
-  // Updated with Dr. Khan's provided number
   const WHATSAPP_NUMBER = "918791785177"; 
 
   const handleWhatsAppSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Formatting the message for a professional look in WhatsApp
     const text = `Hi Dr. Khan, I'd like to request an appointment at Lumina Dental Studio.
 
 *Patient Name:* ${formData.firstName} ${formData.lastName}
@@ -32,6 +29,8 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20">
+          
+          {/* LEFT COLUMN: Contact Info */}
           <div>
             <span className="text-indigo-600 font-bold tracking-widest uppercase text-xs mb-4 block">Get In Touch</span>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8">Ready for Your <br/> <span className="serif italic font-normal text-indigo-400">New Smile?</span></h2>
@@ -39,7 +38,7 @@ const Contact: React.FC = () => {
               Dr. Md S T Khan is most responsive via his **WhatsApp Business** account for quick consultations and appointment scheduling.
             </p>
             
-            <div className="space-y-10">
+            <div className="space-y-10 mb-12">
               <div className="flex items-start gap-6 group">
                 <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 shrink-0 transition-colors group-hover:bg-green-100">
                   <MessageSquare size={24} />
@@ -59,7 +58,10 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-slate-900 mb-2">Location</h4>
-                  <p className="text-slate-500">Apoorva Hospital And Research Centre Pvt Ltd in Bansdih Road  Area<br />Ballia, Uttar Pradesh</p>
+                  {/* Used the place name found from Maps */}
+
+http://googleusercontent.com/map_location_reference/1
+                  <p className="text-slate-500">[Apoorva Hospital And Research Centre Pvt Ltd](http://googleusercontent.com/map_location_reference/0) <br />Ballia - Bansdih Rd, Jalalpur Chak, Uttar Pradesh</p>
                 </div>
               </div>
               
@@ -73,9 +75,27 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* NEW: Embedded Google Map */}
+            <div className="w-full h-64 rounded-3xl overflow-hidden shadow-sm border border-slate-100 relative group">
+               <iframe 
+                title="Clinic Location"
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                scrolling="no" 
+                marginHeight={0} 
+                marginWidth={0} 
+                src="https://maps.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                className="filter grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500"
+               ></iframe>
+               {/* Optional: Overlay to make it interactive on click only if needed, currently it's fully interactive */}
+            </div>
+
           </div>
           
-          <div className="bg-slate-50 p-10 lg:p-16 rounded-[3rem] shadow-sm border border-slate-100">
+          {/* RIGHT COLUMN: Contact Form (Unchanged) */}
+          <div className="bg-slate-50 p-10 lg:p-16 rounded-[3rem] shadow-sm border border-slate-100 h-fit">
             <form className="space-y-6" onSubmit={handleWhatsAppSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
