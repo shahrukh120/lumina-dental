@@ -88,7 +88,7 @@ const Contact: React.FC = () => {
             <div className="w-full h-64 sm:h-80 rounded-3xl overflow-hidden shadow-sm border border-slate-100 mt-auto">
               <iframe
                 title="Clinic Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.536398328639!2d84.1596823!3d25.7675661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399265f3f3317943%3A0x55cd5bef2438a4e2!2sApoorva%20Hospital%20And%20Research%20Centre%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1703990000000!5m2!1sen!2sin"
+                src="https://maps.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full border-0 filter grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
