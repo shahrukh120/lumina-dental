@@ -9,7 +9,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   // 1. State to track if mobile menu is open
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Logic to handle Admin Verification
+  // Logic to handle Admin Verifications
   const handleAdminLogin = async (e: React.MouseEvent) => {
     e.preventDefault();
     setIsMenuOpen(false); // Close menu if open
