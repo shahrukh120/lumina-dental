@@ -10,6 +10,9 @@ import Contact from './components/Contact';
 import SmileAssistant from './components/SmileAssistant';
 import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
+import ClinicalEthics from './components/ClinicalEthics';
+import TermsOfCare from './components/TermsOfCare';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 const LandingPage: React.FC<{ isScrolled: boolean }> = ({ isScrolled }) => (
   <>
@@ -22,6 +25,7 @@ const LandingPage: React.FC<{ isScrolled: boolean }> = ({ isScrolled }) => (
       <Testimonials />
       <Contact />
     </main>
+    
     <SmileAssistant />
     <Footer />
   </>
@@ -49,8 +53,37 @@ const App: React.FC = () => {
 
         <div className="relative z-10">
           <Routes>
+            {/* Main Landing Page */}
             <Route path="/" element={<LandingPage isScrolled={isScrolled} />} />
+            
+            {/* Admin Dashboard */}
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
+            {/* Policy Pages (Wrapped with Navbar & Footer for navigation) */}
+            <Route path="/ethics" element={
+              <>
+                <Navbar isScrolled={true} />
+                <ClinicalEthics />
+                <Footer />
+              </>
+            } />
+            
+            <Route path="/terms" element={
+              <>
+                <Navbar isScrolled={true} />
+                <TermsOfCare />
+                <Footer />
+              </>
+            } />
+            
+            <Route path="/privacy" element={
+              <>
+                <Navbar isScrolled={true} />
+                <PrivacyPolicy />
+                <Footer />
+              </>
+            } />
+
           </Routes>
         </div>
       </div>

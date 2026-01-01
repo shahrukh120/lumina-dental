@@ -95,9 +95,9 @@ const Footer: React.FC = () => {
         <div className="pt-10 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
           <p className="text-xs text-slate-400">© 2026 Dr. Md S T Khan | Dental & maxillofacial clinic. All rights reserved.</p>
           <div className="flex gap-8 text-xs text-slate-400">
-            <a href="#" className="hover:text-slate-600">Clinical Ethics</a>
-            <a href="#" className="hover:text-slate-600">Terms of Care</a>
-            <a href="#" className="hover:text-slate-600">Privacy Policy</a>
+            <a href="/ethics" className="hover:text-slate-600">Clinical Ethics</a>
+            <a href="/terms" className="hover:text-slate-600">Terms of Care</a>
+            <a href="/privacy" className="hover:text-slate-600">Privacy Policy</a>
           </div>
         </div>
       </div>
