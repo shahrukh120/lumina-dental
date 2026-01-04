@@ -15,11 +15,12 @@ dotenv.config();
 const app = express();
 app.use(cors({
   origin: [
-    "http://localhost:5173",                  // Laptop Testing
-    "https://lumina-dental.vercel.app",       // Old Vercel URL (keep it just in case)
-    "https://dental-maxillofacial-clinic.vercel.app", // ✅ ADD THIS NEW URL
-    "http://localhost",                       // Android App
-    "capacitor://localhost"                   // iOS/Android App
+    "http://localhost:5173",
+    "https://lumina-dental.vercel.app", 
+    "https://dental-maxillofacial-clinic.vercel.app",
+    "http://localhost",            // Old Android (Keep it)
+    "https://localhost",           // ✅ NEW: Android Secure Localhost
+    "capacitor://localhost"        // iOS/Android Hybrid
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
