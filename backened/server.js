@@ -13,7 +13,17 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://dental-maxillofacial-clinic.vercel.app/", // Your Vercel Website
+    "http://localhost:5173",            // Your Laptop Development
+    "http://localhost",                 // <--- THIS IS YOUR ANDROID APP
+    "capacitor://localhost"             // <--- ALSO YOUR ANDROID APP
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 
 // 2. CONFIGURE CLOUDINARY
