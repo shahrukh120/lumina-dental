@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { MessageSquare, MapPin, Clock } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  // UPDATED: Set initial service to empty string so placeholder shows first
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    service: 'Maxillofacial Radiology',
+    service: '', 
     message: ''
   });
 
@@ -14,11 +15,15 @@ const Contact: React.FC = () => {
 
   const handleWhatsAppSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Basic validation to ensure a service is selected
+    const serviceText = formData.service === '' ? 'General Inquiry' : formData.service;
+
     const text = `Hi Dr. Khan, I'd like to request an appointment at Lumina Dental Studio.
 
 *Patient Name:* ${formData.firstName} ${formData.lastName}
 *Email:* ${formData.email}
-*Requested Service:* ${formData.service}
+*Requested Service:* ${serviceText}
 *Patient Note:* ${formData.message}`;
 
     const encodedText = encodeURIComponent(text);
@@ -26,9 +31,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    // UPDATED: Tighter vertical padding for mobile (py-12)
     <section id="contact" className="py-12 lg:py-24 bg-white">
-      {/* UPDATED: Adjusted px-4 for smaller screens */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20">
 
@@ -60,9 +63,8 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-slate-900 mb-1">Location</h4>
-                  {/* Cleaned up Address Link */}
                   <a 
-                    href="https://www.google.com/maps/search/?api=1&query=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd"
+                    href="https://www.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-slate-500 text-sm hover:text-indigo-600 transition-colors"
@@ -84,11 +86,10 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* UPDATED MAP CONTAINER: Fixed height (h-64 mobile / h-80 desktop) for stability */}
             <div className="w-full h-64 sm:h-80 rounded-3xl overflow-hidden shadow-sm border border-slate-100 mt-auto">
               <iframe
                 title="Clinic Location"
-                src="https://maps.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.345678901234!2d84.150000!3d25.750000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDQ1JzAwLjAiTiA4NMKwMDknMDAuMCJF!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
                 className="w-full h-full border-0 filter grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -98,7 +99,6 @@ const Contact: React.FC = () => {
           </div>
 
           {/* RIGHT COLUMN: Contact Form */}
-          {/* UPDATED: Reduced padding (p-6) for mobile friendliness */}
           <div className="bg-slate-50 p-6 sm:p-10 lg:p-16 rounded-[2.5rem] shadow-sm border border-slate-100 h-fit">
             <form className="space-y-5" onSubmit={handleWhatsAppSubmit}>
               <div className="grid md:grid-cols-2 gap-5">
@@ -117,30 +117,37 @@ const Contact: React.FC = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Service Required</label>
-                <select value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })} className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all appearance-none cursor-pointer">
-                  <option>Routine Consultation</option>
-                  <option>Maxillofacial Radiology</option>
-                  <option>Maxillofacial Surgery</option>
-                  <option>Periodontal Treatment</option>
-                  <option>Dental Implants</option>
-                  <option>Tooth Fillings</option>
-                  <option>Tooth removal</option>
-                  <option>Teeth Cleaning</option>
-                  <option>Teeth Whitening</option>
-                  <option>Laser Treatment</option>
-                  <option>Dental cap</option>
-                  <option>Denture</option>
-                  <option>Trauma</option>
-                  <option>Oral Cancer</option>
-                  <option>Ulcer</option>
-                  <option>3rd Molar Surgery</option>
-                  <option>Braces</option>
-                  <option>Sensitivity</option>
-                  <option>Pain</option>
-                  <option>TMJ pain</option>
-                  <option>Jaw pain </option>
-                  <option>Lock jaw</option>
-                  <option>RE-RCT</option>
+                <select 
+                  required 
+                  value={formData.service} 
+                  onChange={(e) => setFormData({ ...formData, service: e.target.value })} 
+                  className={`w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all appearance-none cursor-pointer ${formData.service === "" ? "text-slate-400" : "text-slate-900"}`}
+                >
+                  {/* UPDATED: Added placeholder option */}
+                  <option value="" disabled>Select Services</option>
+                  <option value="Routine Consultation">Routine Consultation</option>
+                  <option value="Maxillofacial Radiology">Maxillofacial Radiology</option>
+                  <option value="Maxillofacial Surgery">Maxillofacial Surgery</option>
+                  <option value="Periodontal Treatment">Periodontal Treatment</option>
+                  <option value="Dental Implants">Dental Implants</option>
+                  <option value="Tooth Fillings">Tooth Fillings</option>
+                  <option value="Tooth removal">Tooth removal</option>
+                  <option value="Teeth Cleaning">Teeth Cleaning</option>
+                  <option value="Teeth Whitening">Teeth Whitening</option>
+                  <option value="Laser Treatment">Laser Treatment</option>
+                  <option value="Dental cap">Dental cap</option>
+                  <option value="Denture">Denture</option>
+                  <option value="Trauma">Trauma</option>
+                  <option value="Oral Cancer">Oral Cancer</option>
+                  <option value="Ulcer">Ulcer</option>
+                  <option value="3rd Molar Surgery">3rd Molar Surgery</option>
+                  <option value="Braces">Braces</option>
+                  <option value="Sensitivity">Sensitivity</option>
+                  <option value="Pain">Pain</option>
+                  <option value="TMJ pain">TMJ pain</option>
+                  <option value="Jaw pain">Jaw pain</option>
+                  <option value="Lock jaw">Lock jaw</option>
+                  <option value="RE-RCT">RE-RCT</option>
                 </select>
               </div>
               <div className="space-y-2">
