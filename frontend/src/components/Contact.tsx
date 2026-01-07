@@ -118,11 +118,28 @@ const Contact: React.FC = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Service Required</label>
                 <select value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })} className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all appearance-none cursor-pointer">
+                  <option>Routine Consultation</option>
                   <option>Maxillofacial Radiology</option>
                   <option>Maxillofacial Surgery</option>
                   <option>Periodontal Treatment</option>
                   <option>Dental Implants</option>
-                  <option>Routine Consultation</option>
+                  <option>Tooth Fillings</option>
+                  <option>Tooth removal</option>
+                  <option>Teeth Cleaning</option>
+                  <option>Teeth Whitening</option>
+                  <option>Laser Treatment</option>
+                  <option>Dental cap</option>
+                  <option>Trauma</option>
+                  <option>Oral Cancer</option>
+                  <option>Ulcer</option>
+                  <option>3rd Molar Surgery</option>
+                  <option>Braces</option>
+                  <option>Sensitivity</option>
+                  <option>Pain</option>
+                  <option>TMJ pain</option>
+                  <option>Jaw pain </option>
+                  <option>Lock jaw</option>
+                  <option>RE-RCT</option>
                 </select>
               </div>
               <div className="space-y-2">
