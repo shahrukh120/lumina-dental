@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
           <div>
             <h5 className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-[10px]">Specialties</h5>
             <ul className="space-y-4">
-              {['Maxillofacial Radiology', 'Oral Surgery', 'Periodontology', 'Dental Implants', 'Full Mouth Rehab'].map(item => (
+              {['Maxillofacial Radiology', 'Oral Surgery', 'Periodontology', 'Dental Implants', 'Full Mouth Rehab','Tooth Fillings','Tooth Removal' ,'Teeth cleaning' ,'Laser Treatment' ,'Dental Cap', 'Denture' , 'Trauma', 'Oral Cancer', 'Ulcer', '3rd molar surgery', 'Braces', 'sensitivity', 'pain','TMJ pain','jaw pain', 'Lock jaw'].map(item => (
                 <li key={item}>
                   <a href="#services" className="text-sm text-slate-500 hover:text-indigo-600 transition-colors">{item}</a>
                 </li>

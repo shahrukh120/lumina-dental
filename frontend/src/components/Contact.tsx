@@ -129,6 +129,7 @@ const Contact: React.FC = () => {
                   <option>Teeth Whitening</option>
                   <option>Laser Treatment</option>
                   <option>Dental cap</option>
+                  <option>Denture</option>
                   <option>Trauma</option>
                   <option>Oral Cancer</option>
                   <option>Ulcer</option>
