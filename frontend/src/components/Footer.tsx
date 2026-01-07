@@ -2,7 +2,6 @@ import React from 'react';
 import { Instagram, Linkedin, Facebook, Twitter } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  // Define social links with their respective icons and URLs
   const socialLinks = [
     { 
       name: 'Instagram', 
@@ -17,20 +16,31 @@ const Footer: React.FC = () => {
     { 
       name: 'Facebook', 
       icon: <Facebook size={18} />, 
-      url: "#" // Add link if available
+      url: "#" 
     },
     { 
       name: 'Twitter', 
       icon: <Twitter size={18} />, 
-      url: "#" // Add link if available
+      url: "#" 
     }
   ];
 
+  // Extracted list for cleaner code
+  const specialties = [
+    'Maxillofacial Radiology', 'Oral Surgery', 'Periodontology', 'Dental Implants', 
+    'Full Mouth Rehab', 'Tooth Fillings', 'Tooth Removal', 'Teeth cleaning', 
+    'Laser Treatment', 'Dental Cap', 'Denture', 'Trauma', 'Oral Cancer', 'Ulcer', 
+    '3rd molar surgery', 'Braces', 'Sensitivity', 'Pain', 'TMJ pain', 'Jaw pain', 'Lock jaw'
+  ];
+
   return (
-    <footer className="bg-slate-50 border-t border-slate-200 pt-20 pb-10">
+    <footer className="bg-slate-50 border-t border-slate-200 pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-          <div className="col-span-1 lg:col-span-1">
+        {/* Changed grid gap slightly to accommodate wider specialty column if needed */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16">
+          
+          {/* COLUMN 1: Brand & Social */}
+          <div className="col-span-1">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">D</div>
               <span className="text-xl font-bold tracking-tight text-slate-900">
@@ -40,8 +50,6 @@ const Footer: React.FC = () => {
             <p className="text-slate-500 text-sm leading-relaxed mb-6">
               A specialized dental studio led by Dr. Md S T Khan, dedicated to advanced Maxillofacial diagnostics and surgical precision.
             </p>
-            
-            {/* UPDATED SOCIAL LINKS SECTION */}
             <div className="flex gap-4">
               {socialLinks.map((social) => (
                 <a 
@@ -58,9 +66,10 @@ const Footer: React.FC = () => {
             </div>
           </div>
           
+          {/* COLUMN 2: Clinical Links */}
           <div>
             <h5 className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-[10px]">Clinical Links</h5>
-            <ul className="space-y-4">
+            <ul className="space-y-3"> {/* Reduced spacing from 4 to 3 */}
               {['About', 'Services', 'Gallery', 'Testimonials', 'Contact'].map(item => (
                 <li key={item}>
                   <a href={`#${item.toLowerCase()}`} className="text-sm text-slate-500 hover:text-indigo-600 transition-colors">{item}</a>
@@ -69,17 +78,27 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           
-          <div>
+          {/* COLUMN 3: Specialties (THE FIX) */}
+          <div className="lg:col-span-1"> {/* Expanded width context */}
             <h5 className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-[10px]">Specialties</h5>
-            <ul className="space-y-4">
-              {['Maxillofacial Radiology', 'Oral Surgery', 'Periodontology', 'Dental Implants', 'Full Mouth Rehab','Tooth Fillings','Tooth Removal' ,'Teeth cleaning' ,'Laser Treatment' ,'Dental Cap', 'Denture' , 'Trauma', 'Oral Cancer', 'Ulcer', '3rd molar surgery', 'Braces', 'sensitivity', 'pain','TMJ pain','jaw pain', 'Lock jaw'].map(item => (
+            
+            {/* CHANGE MADE HERE: 
+               1. Changed from space-y-4 to grid grid-cols-2 
+               2. Added gap-x-2 for horizontal space 
+               3. Added gap-y-2 for tight vertical space
+            */}
+            <ul className="grid grid-cols-2 gap-x-2 gap-y-2">
+              {specialties.map(item => (
                 <li key={item}>
-                  <a href="#services" className="text-sm text-slate-500 hover:text-indigo-600 transition-colors">{item}</a>
+                  <a href="#services" className="text-xs text-slate-500 hover:text-indigo-600 transition-colors block truncate" title={item}>
+                    {item}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
           
+          {/* COLUMN 4: Consultation */}
           <div>
             <h5 className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-[10px]">Consultation</h5>
             <p className="text-sm text-slate-500 mb-6">Schedule a diagnostic evaluation for specialized surgical care.</p>
@@ -92,7 +111,8 @@ const Footer: React.FC = () => {
           </div>
         </div>
         
-        <div className="pt-10 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        {/* Footer Bottom */}
+        <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
           <p className="text-xs text-slate-400">© 2026 Dr. Md S T Khan | Dental & maxillofacial clinic. All rights reserved.</p>
           <div className="flex gap-8 text-xs text-slate-400">
             <a href="/ethics" className="hover:text-slate-600">Clinical Ethics</a>
