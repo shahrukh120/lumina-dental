@@ -1,5 +1,6 @@
 import React from 'react';
 import { Instagram, Linkedin, Facebook, Twitter } from 'lucide-react';
+import { CLINIC, whatsappLink, mapsDirectionsLink } from '../constants/clinic';
 
 const Footer: React.FC = () => {
   const socialLinks = [
@@ -104,12 +105,22 @@ const Footer: React.FC = () => {
           {/* COLUMN 4: Consultation */}
           <div>
             <h5 className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-[10px]">Consultation</h5>
-            <p className="text-sm text-slate-500 mb-6">Schedule a diagnostic evaluation for specialized surgical care.</p>
-            <a 
-              href="#contact" 
-              className="w-full bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors text-sm font-bold block text-center shadow-lg shadow-indigo-100"
+            <p className="text-sm text-slate-500 mb-6">{CLINIC.hours.weekdayLabel}<br />Sun: {CLINIC.hours.sundayLabel}</p>
+            <a
+              href={whatsappLink(`Hi ${CLINIC.doctor}, I'd like to book an appointment.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors text-sm font-bold block text-center shadow-lg shadow-green-100 mb-3"
             >
               Book via WhatsApp
+            </a>
+            <a
+              href={mapsDirectionsLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full border border-slate-300 text-slate-700 px-6 py-3 rounded-xl hover:border-indigo-600 hover:text-indigo-600 transition-colors text-sm font-bold block text-center"
+            >
+              Get Directions
             </a>
           </div>
         </div>
