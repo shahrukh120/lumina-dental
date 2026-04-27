@@ -1,7 +1,36 @@
-
 @import "tailwindcss";
 @config "../tailwind.config.js";
+
 @theme {
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-serif: "Fraunces", "Playfair Display", serif;
+  --font-sans:  "Inter", system-ui, sans-serif;
+
+  /* Professional deep teal-navy clinical palette (overrides Tailwind indigo) */
+  --color-indigo-50:  #eef4f6;
+  --color-indigo-100: #d6e3e8;
+  --color-indigo-200: #b0c8d0;
+  --color-indigo-300: #85a8b3;
+  --color-indigo-400: #5a8693;
+  --color-indigo-500: #356676;
+  --color-indigo-600: #1f4a55;
+  --color-indigo-700: #163842;
+  --color-indigo-800: #102a32;
+  --color-indigo-900: #0a1c22;
+
+  /* Warm gold accent — use sparingly for premium touch */
+  --color-gold-50:  #faf6ee;
+  --color-gold-100: #f1e6cc;
+  --color-gold-400: #cba265;
+  --color-gold-500: #b58a4a;
+  --color-gold-600: #947038;
+}
+
+/* Body type refinements */
+body {
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Slight refinement to default heading weight & tracking for serif */
+h1, h2, h3 {
+  font-weight: 600;
 }

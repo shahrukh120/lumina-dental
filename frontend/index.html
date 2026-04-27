@@ -3,48 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dental & maxillofacial clinic | Dr. Md Suleman </title>
-    
-  
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <title>Dental & Maxillofacial Clinic | Dr. Md Suleman Tarique Khan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Keep your custom styles here or move to src/index.css */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.005em;
         }
+
         h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Fraunces', 'Playfair Display', serif;
+            font-optical-sizing: auto;
+            letter-spacing: -0.02em;
         }
-        
+
+        h1 { font-variation-settings: "opsz" 144, "SOFT" 50; }
+
         @keyframes float {
-            0% { transform: translateY(0px) translateX(0px); }
-            50% { transform: translateY(-20px) translateX(10px); }
+            0%   { transform: translateY(0px) translateX(0px); }
+            50%  { transform: translateY(-20px) translateX(10px); }
             100% { transform: translateY(0px) translateX(0px); }
         }
-        
+
         @keyframes pulse-slow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.1); }
+            0%, 100% { opacity: 0.25; transform: scale(1); }
+            50%      { opacity: 0.45; transform: scale(1.08); }
         }
 
-        .animate-float {
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        .animate-pulse-slow {
-            animation: pulse-slow 12s ease-in-out infinite;
-        }
+        .animate-float      { animation: float 9s ease-in-out infinite; }
+        .animate-pulse-slow { animation: pulse-slow 14s ease-in-out infinite; }
 
         .mesh-gradient {
-            background-color: #f8fafc;
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.02) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%);
+            background-color: #f7f6f2;
+            background-image:
+                radial-gradient(at 0% 0%,    hsla(193, 47%, 22%, 0.06) 0, transparent 55%),
+                radial-gradient(at 100% 0%,  hsla(36, 41%, 50%, 0.05)  0, transparent 50%),
+                radial-gradient(at 50% 100%, hsla(193, 47%, 22%, 0.04) 0, transparent 50%);
         }
     </style>
 </head>

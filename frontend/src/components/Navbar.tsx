@@ -46,12 +46,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo Section */}
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">D</div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">
-            Dental & <span className="font-light text-slate-500">maxillofacial clinic</span>
+        <a href="/" className="flex items-center gap-3 group">
+          <div className="relative w-11 h-11 rounded-md bg-indigo-600 flex items-center justify-center shadow-sm ring-1 ring-indigo-700/20">
+            <span className="serif text-white text-2xl leading-none -mt-0.5">D</span>
+            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-5 h-px bg-gold-500"></span>
+          </div>
+          <span className="serif text-[1.35rem] leading-tight text-slate-900 tracking-tight">
+            Dental <span className="text-gold-500">&amp;</span> <span className="text-slate-500 font-normal italic">Maxillofacial</span>
           </span>
-        </div>
+        </a>
         
         {/* Desktop Menu (Hidden on Mobile) */}
         <div className="hidden md:flex items-center gap-10">
@@ -72,9 +75,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
             Admin
           </button>
           
-          <a 
+          <a
             href="#contact"
-            className="bg-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg inline-block"
+            className="bg-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-indigo-700 transition-all shadow-brand hover:-translate-y-0.5 inline-block"
           >
             Book Appointment
           </a>

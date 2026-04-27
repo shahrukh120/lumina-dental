@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
         <div className="absolute top-20 right-1/4 w-32 h-32 bg-slate-200/50 rounded-full blur-2xl animate-pulse-slow"></div>
 
         {/* Subtle Grid Pattern Overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#4f46e5 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#1f4a55 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }}></div>
       </div>
 
       <div className="absolute top-0 right-0 w-1/2 h-full hidden lg:block z-10">
@@ -30,9 +30,9 @@ const Hero: React.FC = () => {
             </span>
             Clinical Excellence from AMU
           </div>
-          <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 mb-8 leading-[1.1] relative">
+          <h1 className="serif text-5xl lg:text-[5.25rem] font-medium text-slate-900 mb-8 leading-[1.05] relative tracking-tight">
             Precision Surgery. <br />
-            <span className="text-indigo-600 italic serif font-normal">Advanced Dental Diagnostics.</span> <br />
+            <span className="text-indigo-600 italic font-normal">Advanced Dental Diagnostics.</span> <br />
             Total Care.
             {/* Subtle glow behind text */}
             <div className="absolute -z-10 top-1/2 left-0 -translate-y-1/2 w-full h-32 bg-indigo-200/10 blur-[60px]"></div>
@@ -54,7 +54,7 @@ const Hero: React.FC = () => {
     leading-none
     hover:bg-indigo-700
     transition-all
-    shadow-[0_20px_50px_rgba(79,70,229,0.3)]
+    shadow-[0_20px_50px_rgba(31,74,85,0.35)]
     hover:-translate-y-1
     active:scale-95
     text-center

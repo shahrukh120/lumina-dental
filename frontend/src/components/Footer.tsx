@@ -41,10 +41,13 @@ const Footer: React.FC = () => {
           
           {/* COLUMN 1: Brand & Social */}
           <div className="col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">D</div>
-              <span className="text-xl font-bold tracking-tight text-slate-900">
-                Dental & <span className="font-light text-slate-500">maxillofacial clinic</span>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="relative w-10 h-10 rounded-md bg-indigo-600 flex items-center justify-center shadow-sm ring-1 ring-indigo-700/20">
+                <span className="serif text-white text-xl leading-none -mt-0.5">D</span>
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-px bg-gold-500"></span>
+              </div>
+              <span className="serif text-xl leading-tight text-slate-900 tracking-tight">
+                Dental <span className="text-gold-500">&amp;</span> <span className="text-slate-500 font-normal italic">Maxillofacial</span>
               </span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6">
