@@ -47,7 +47,10 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-const ADMIN_EMAIL = "mdsulemanarchie@gmail.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "mdsulemanarchie@gmail.com";
+// Set ADMIN_PASSWORD in your environment (e.g. Render dashboard). The fallback
+// is only for local development — change it before going live.
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "maxodent@2026";
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/lumina_dental';
@@ -76,12 +79,20 @@ const Gallery = mongoose.model('Gallery', gallerySchema);
 
 // Auth
 app.post('/api/admin/verify', (req, res) => {
-  const { email } = req.body;
-  if (email === ADMIN_EMAIL) {
-    const token = jwt.sign({ email, role: 'admin' }, JWT_SECRET, { expiresIn: '1d' });
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: "Email and password are required." });
+  }
+
+  const emailOk = email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  const passwordOk = password === ADMIN_PASSWORD;
+
+  if (emailOk && passwordOk) {
+    const token = jwt.sign({ email: ADMIN_EMAIL, role: 'admin' }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ success: true, token });
   } else {
-    res.status(403).json({ success: false });
+    res.status(401).json({ success: false, message: "Invalid email or password." });
   }
 });
 

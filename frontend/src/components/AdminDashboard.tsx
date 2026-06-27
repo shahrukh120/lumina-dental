@@ -24,6 +24,15 @@ const AdminDashboard: React.FC = () => {
   const [category, setCategory] = useState('Clinic');
   const [imageFile, setImageFile] = useState<File | null>(null);
 
+  // Guard: block the dashboard unless a valid admin token is present.
+  // Without this, anyone could open /admin-dashboard directly.
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      window.location.replace('/');
+    }
+  }, []);
+
   // Fetch Data based on active tab
   useEffect(() => {
     fetchItems();

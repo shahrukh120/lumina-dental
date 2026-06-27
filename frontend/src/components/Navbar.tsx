@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import API_BASE_URL from '../config';
+import AdminLogin from './AdminLogin';
 
 interface NavbarProps {
   isScrolled: boolean;
@@ -8,36 +8,14 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   // 1. State to track if mobile menu is open
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Controls the Admin login modal
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  // Logic to handle Admin Verifications
-  const handleAdminLogin = async (e: React.MouseEvent) => {
+  // Open the secure login card instead of a plain prompt
+  const handleAdminLogin = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsMenuOpen(false); // Close menu if open
-    
-    const email = window.prompt("Enter Admin Email to access Dashboard:");
-    
-    if (!email) return;
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/admin/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        localStorage.setItem('adminToken', data.token);
-        alert("Verification Successful. Welcome, Dr. Khan.");
-        window.location.href = '/admin-dashboard'; 
-      } else {
-        alert(data.message || "Unauthorized Access");
-      }
-    } catch (error) {
-      console.error("Login Error:", error);
-      alert("Could not connect to the server.");
-    }
+    setIsMenuOpen(false); // Close mobile menu if open
+    setIsLoginOpen(true);
   };
 
   return (
@@ -137,6 +115,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
           </a>
         </div>
       )}
+
+      {/* Secure Admin Login Modal */}
+      <AdminLogin isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </nav>
   );
 };
