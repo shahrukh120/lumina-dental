@@ -9,7 +9,7 @@ const PrivacyPolicy: React.FC = () => {
         
         <div className="space-y-6 text-slate-600">
           <p>
-            Dental & Maxillofacial Clinic ("we", "our", or "us") is committed to protecting your privacy. This policy explains how we handle your personal and medical information.
+            MaxoDent Dental Care Clinic ("we", "our", or "us") is committed to protecting your privacy. This policy explains how we handle your personal and medical information.
           </p>
 
           <h3 className="text-lg font-bold text-slate-900 mt-8">Information We Collect</h3>

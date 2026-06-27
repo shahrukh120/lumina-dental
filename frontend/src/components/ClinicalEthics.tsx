@@ -7,7 +7,7 @@ const ClinicalEthics: React.FC = () => {
       <div className="max-w-4xl mx-auto px-6">
         <h1 className="text-4xl font-bold text-slate-900 mb-6">Clinical Ethics & <span className="text-indigo-600">Standards</span></h1>
         <p className="text-lg text-slate-600 mb-12 leading-relaxed">
-          At Dental & Maxillofacial Clinic, our practice is founded on the core principles of bioethics: autonomy, non-maleficence, beneficence, and justice. Dr. Md S T Khan and his team adhere to the highest standards of the Indian Dental Association (IDA).
+          At MaxoDent Dental Care Clinic, our practice is founded on the core principles of bioethics: autonomy, non-maleficence, beneficence, and justice. Dr. Md S T Khan and his team adhere to the highest standards of the Indian Dental Association (IDA).
         </p>
 
         <div className="space-y-12">

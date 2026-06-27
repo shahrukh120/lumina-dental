@@ -47,12 +47,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo Section */}
         <a href="/" className="flex items-center gap-3 group">
-          <div className="relative w-11 h-11 rounded-md bg-indigo-600 flex items-center justify-center shadow-sm ring-1 ring-indigo-700/20">
-            <span className="serif text-white text-2xl leading-none -mt-0.5">D</span>
-            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-5 h-px bg-gold-500"></span>
+          <div className="relative w-11 h-11 rounded-xl bg-linear-to-br from-indigo-900 to-indigo-500 flex items-center justify-center shadow-md ring-1 ring-indigo-900/20">
+            <span className="serif text-white text-2xl leading-none -mt-0.5">M</span>
+            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-5 h-px bg-gold-400"></span>
           </div>
-          <span className="serif text-[1.35rem] leading-tight text-slate-900 tracking-tight">
-            Dental <span className="text-gold-500">&amp;</span> <span className="text-slate-500 font-normal italic">Maxillofacial</span>
+          <span className="flex flex-col leading-none">
+            <span className="serif text-[1.4rem] tracking-tight">
+              <span className="text-indigo-900 font-semibold">Maxo</span><span className="text-indigo-500 font-semibold">Dent</span>
+            </span>
+            <span className="text-[0.6rem] font-semibold tracking-[0.22em] text-slate-400 uppercase mt-0.5">Dental Care Clinic</span>
           </span>
         </a>
         

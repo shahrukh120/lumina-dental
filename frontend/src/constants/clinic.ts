@@ -1,5 +1,5 @@
 export const CLINIC = {
-  name: 'Dental & Maxillofacial Clinic',
+  name: 'MaxoDent Dental Care Clinic',
   doctor: 'Dr. Md S T Khan',
   whatsappNumber: '918791785177',
   whatsappDisplay: '+91 87917 85177',

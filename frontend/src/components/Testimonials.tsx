@@ -16,7 +16,7 @@ const initialTestimonials: Testimonial[] = [
   {
     name: "Elena Richardson",
     role: "Marketing Director",
-    content: "The attention to detail at Lumina is unmatched. Dr. Khan's approach was artistic and precise.",
+    content: "The attention to detail at MaxoDent is unmatched. Dr. Khan's approach was artistic and precise.",
     image: "https://picsum.photos/seed/p1/200/200",
     stars: 5
   },

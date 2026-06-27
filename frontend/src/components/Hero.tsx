@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
         <div className="absolute top-20 right-1/4 w-32 h-32 bg-slate-200/50 rounded-full blur-2xl animate-pulse-slow"></div>
 
         {/* Subtle Grid Pattern Overlay */}
-        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#1f4a55 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }}></div>
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#1b4ba8 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }}></div>
       </div>
 
       <div className="absolute top-0 right-0 w-1/2 h-full hidden lg:block z-10">
@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
     leading-none
     hover:bg-indigo-700
     transition-all
-    shadow-[0_20px_50px_rgba(31,74,85,0.35)]
+    shadow-[0_20px_50px_rgba(27,75,168,0.35)]
     hover:-translate-y-1
     active:scale-95
     text-center
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Clinic info card — live status, hours, WhatsApp & Directions */}
-          <div className="mt-12 max-w-xl rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-[0_10px_40px_-12px_rgba(15,42,50,0.18)] overflow-hidden">
+          <div className="mt-12 max-w-xl rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-[0_10px_40px_-12px_rgba(12,31,74,0.18)] overflow-hidden">
             <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-100/80">
               <span className="relative flex h-2.5 w-2.5">
                 {status.state === 'open' && (

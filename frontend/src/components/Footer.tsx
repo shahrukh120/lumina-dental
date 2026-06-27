@@ -43,16 +43,19 @@ const Footer: React.FC = () => {
           {/* COLUMN 1: Brand & Social */}
           <div className="col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-10 h-10 rounded-md bg-indigo-600 flex items-center justify-center shadow-sm ring-1 ring-indigo-700/20">
-                <span className="serif text-white text-xl leading-none -mt-0.5">D</span>
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-px bg-gold-500"></span>
+              <div className="relative w-10 h-10 rounded-xl bg-linear-to-br from-indigo-900 to-indigo-500 flex items-center justify-center shadow-md ring-1 ring-indigo-900/20">
+                <span className="serif text-white text-xl leading-none -mt-0.5">M</span>
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-px bg-gold-400"></span>
               </div>
-              <span className="serif text-xl leading-tight text-slate-900 tracking-tight">
-                Dental <span className="text-gold-500">&amp;</span> <span className="text-slate-500 font-normal italic">Maxillofacial</span>
+              <span className="flex flex-col leading-none">
+                <span className="serif text-xl tracking-tight">
+                  <span className="text-indigo-900 font-semibold">Maxo</span><span className="text-indigo-500 font-semibold">Dent</span>
+                </span>
+                <span className="text-[0.58rem] font-semibold tracking-[0.22em] text-slate-400 uppercase mt-0.5">Dental Care Clinic</span>
               </span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6">
-              A specialized dental studio led by Dr. Md S T Khan, dedicated to advanced Maxillofacial diagnostics and surgical precision.
+              Complete dental &amp; maxillofacial care under one roof, led by Dr. Md S T Khan — combining surgical precision with advanced diagnostics. Healthy smile, confident you.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -127,7 +130,7 @@ const Footer: React.FC = () => {
         
         {/* Footer Bottom */}
         <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
-          <p className="text-xs text-slate-400">© 2026 Dr. Md S T Khan | Dental & maxillofacial clinic. All rights reserved.</p>
+          <p className="text-xs text-slate-400">© 2026 MaxoDent Dental Care Clinic · Dr. Md S T Khan. All rights reserved.</p>
           <div className="flex gap-8 text-xs text-slate-400">
             <a href="/ethics" className="hover:text-slate-600">Clinical Ethics</a>
             <a href="/terms" className="hover:text-slate-600">Terms of Care</a>

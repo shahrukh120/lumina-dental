@@ -5,24 +5,24 @@
   --font-serif: "Fraunces", "Playfair Display", serif;
   --font-sans:  "Inter", system-ui, sans-serif;
 
-  /* Professional deep teal-navy clinical palette (overrides Tailwind indigo) */
-  --color-indigo-50:  #eef4f6;
-  --color-indigo-100: #d6e3e8;
-  --color-indigo-200: #b0c8d0;
-  --color-indigo-300: #85a8b3;
-  --color-indigo-400: #5a8693;
-  --color-indigo-500: #356676;
-  --color-indigo-600: #1f4a55;
-  --color-indigo-700: #163842;
-  --color-indigo-800: #102a32;
-  --color-indigo-900: #0a1c22;
+  /* MaxoDent royal-blue & deep-navy clinical palette (overrides Tailwind indigo) */
+  --color-indigo-50:  #eef3fc;
+  --color-indigo-100: #d9e6f9;
+  --color-indigo-200: #b3ccf2;
+  --color-indigo-300: #7da7e8;
+  --color-indigo-400: #4f82db;
+  --color-indigo-500: #2563c4;
+  --color-indigo-600: #1b4ba8;
+  --color-indigo-700: #153a85;
+  --color-indigo-800: #112d66;
+  --color-indigo-900: #0c1f4a;
 
-  /* Warm gold accent — use sparingly for premium touch */
-  --color-gold-50:  #faf6ee;
-  --color-gold-100: #f1e6cc;
-  --color-gold-400: #cba265;
-  --color-gold-500: #b58a4a;
-  --color-gold-600: #947038;
+  /* Bright accent blue — the "Dent" highlight from the logo */
+  --color-gold-50:  #eaf2ff;
+  --color-gold-100: #cfe1ff;
+  --color-gold-400: #3b82f6;
+  --color-gold-500: #2563eb;
+  --color-gold-600: #1d4ed8;
 }
 
 /* Body type refinements */

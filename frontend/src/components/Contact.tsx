@@ -19,7 +19,7 @@ const Contact: React.FC = () => {
     // Basic validation to ensure a service is selected
     const serviceText = formData.service === '' ? 'General Inquiry' : formData.service;
 
-    const text = `Hi Dr. Khan, I'd like to request an appointment at Lumina Dental Studio.
+    const text = `Hi Dr. Khan, I'd like to request an appointment at MaxoDent Dental Care Clinic.
 
 *Patient Name:* ${formData.firstName} ${formData.lastName}
 *Email:* ${formData.email}
