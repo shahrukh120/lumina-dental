@@ -16,7 +16,9 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://lumina-dental.vercel.app", 
+    "https://maxodent.co.in",                       // Primary custom domain
+    "https://www.maxodent.co.in",                   // www custom domain
+    "https://lumina-dental.vercel.app",
     "https://dental-maxillofacial-clinic.vercel.app",
     "http://localhost",            // Old Android (Keep it)
     "https://localhost",           // ✅ NEW: Android Secure Localhost
