@@ -92,7 +92,8 @@ const Contact: React.FC = () => {
                     rel="noopener noreferrer"
                     className="text-slate-500 text-sm hover:text-indigo-600 transition-colors block"
                   >
-                    Baheri, Ballia, Uttar Pradesh
+                    Delhi Public Convent School,<br />
+                    Baheri, Ballia, UP 277001
                   </a>
                   <p className="text-sm text-slate-500 mt-1.5 flex items-center gap-1.5">
                     <Clock size={14} className="text-indigo-500 shrink-0" /> Daily: 5:00 PM – 9:00 PM
