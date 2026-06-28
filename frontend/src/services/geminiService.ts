@@ -10,10 +10,11 @@ const CLINIC_DETAILS = `
 CLINIC INFO:
 - Doctor: Dr. Md S T Khan (Expert in Dental Procedures, Maxillofacial Surgery, Radiology)
 - Clinic Name: MaxoDent Dental Care Clinic (Complete Dental & Maxillofacial Care Under One Roof)
-- Location: Apoorva Hospital And Research Centre Pvt Ltd in Bansdih Road Area Ballia, Uttar Pradesh
-- Phone: +91 87917 85177 
+- The doctor practices at TWO clinics:
+  1. Main Clinic: Apoorva Hospital And Research Centre Pvt Ltd, Bansdih Road Area, Ballia, Uttar Pradesh. Timings: Mon - Sat: 10:00 AM - 5:00 PM, Sunday: Only Emergency.
+  2. Baheri Clinic: Baheri, Ballia, Uttar Pradesh. Timings: Daily 5:00 PM - 9:00 PM.
+- Phone: +91 87917 85177
 - Email: mdsulemanarchie@gmail.com
-- Timings: Mon - Sat: 10:00 AM - 5:00 PM , Sunday: Only Emergency
 
 KEY SERVICES:
 - Dental Implants

@@ -108,7 +108,14 @@ const Footer: React.FC = () => {
           {/* COLUMN 4: Consultation */}
           <div>
             <h5 className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-[10px]">Consultation</h5>
-            <p className="text-sm text-slate-500 mb-6">{CLINIC.hours.weekdayLabel}<br />Sun: {CLINIC.hours.sundayLabel}</p>
+            <p className="text-sm text-slate-500 mb-2">
+              <span className="font-semibold text-slate-700">Main Clinic (Apoorva Hospital)</span><br />
+              {CLINIC.hours.weekdayLabel}<br />Sun: {CLINIC.hours.sundayLabel}
+            </p>
+            <p className="text-sm text-slate-500 mb-6">
+              <span className="font-semibold text-slate-700">Baheri Clinic</span><br />
+              Daily: 5:00 PM – 9:00 PM
+            </p>
             <a
               href={whatsappLink(`Hi ${CLINIC.doctor}, I'd like to book an appointment.`)}
               target="_blank"

@@ -57,43 +57,76 @@ const Contact: React.FC = () => {
                 </div>
               </div>
 
+              {/* Clinic 1 — Main (Apoorva Hospital) */}
               <div className="flex items-start gap-5">
                 <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 shrink-0">
                   <MapPin size={22} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-1">Location</h4>
-                  <a 
-                    href="https://www.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd" 
+                  <h4 className="text-lg font-bold text-slate-900 mb-1">Main Clinic · Apoorva Hospital</h4>
+                  <a
+                    href="https://www.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-slate-500 text-sm hover:text-indigo-600 transition-colors"
+                    className="text-slate-500 text-sm hover:text-indigo-600 transition-colors block"
                   >
                     Apoorva Hospital And Research Centre Pvt Ltd<br />
                     Ballia - Bansdih Rd, Jalalpur Chak, UP
                   </a>
+                  <p className="text-sm text-slate-500 mt-1.5 flex items-center gap-1.5">
+                    <Clock size={14} className="text-indigo-500 shrink-0" /> Mon – Sat: 10:00 AM – 5:00 PM · Sun: Emergency
+                  </p>
                 </div>
               </div>
 
+              {/* Clinic 2 — Baheri */}
               <div className="flex items-start gap-5">
                 <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 shrink-0">
-                  <Clock size={22} />
+                  <MapPin size={22} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-1">Office Hours</h4>
-                  <p className="text-slate-500 text-sm">Mon - Sat: 10:00 AM - 5:00 PM<br />Sunday: Only Emergency</p>
+                  <h4 className="text-lg font-bold text-slate-900 mb-1">Baheri Clinic</h4>
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=25.757378,84.143394"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-500 text-sm hover:text-indigo-600 transition-colors block"
+                  >
+                    Baheri, Ballia, Uttar Pradesh
+                  </a>
+                  <p className="text-sm text-slate-500 mt-1.5 flex items-center gap-1.5">
+                    <Clock size={14} className="text-indigo-500 shrink-0" /> Daily: 5:00 PM – 9:00 PM
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="w-full h-64 sm:h-80 rounded-3xl overflow-hidden shadow-sm border border-slate-100 mt-auto">
-              <iframe
-                title="Clinic Location"
-                src="https://maps.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full border-0 filter grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+            {/* Maps for both clinics */}
+            <div className="grid sm:grid-cols-2 gap-4 mt-auto">
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Main Clinic</p>
+                <div className="w-full h-56 rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                  <iframe
+                    title="Main Clinic Location"
+                    src="https://maps.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    className="w-full h-full border-0 filter grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Baheri Clinic</p>
+                <div className="w-full h-56 rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                  <iframe
+                    title="Baheri Clinic Location"
+                    src="https://maps.google.com/maps?q=25.757378,84.143394&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    className="w-full h-full border-0 filter grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
             </div>
 
           </div>
