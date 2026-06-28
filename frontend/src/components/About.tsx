@@ -13,11 +13,11 @@ const About: React.FC = () => {
             {/* Animated pulsing background circle */}
             <div className="absolute -top-10 -left-10 w-64 h-64 bg-indigo-50/80 rounded-full z-0 blur-3xl animate-pulse-slow" />
 
-            <div className="relative z-10 bg-slate-100 rounded-[3rem] overflow-hidden aspect-[4/5] shadow-2xl group border border-slate-200">
+            <div className="relative z-10 bg-white rounded-[3rem] overflow-hidden aspect-[4/5] shadow-2xl group border border-slate-200">
               <img
-                src="/pphoto.png"
+                src="/profile_pic.jpeg"
                 alt="Dr. Md S T Khan"
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-105"
               />
               <div className="absolute inset-0 ring-1 ring-inset ring-slate-900/10 rounded-[3rem]"></div>
             </div>
