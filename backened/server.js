@@ -55,6 +55,10 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "mdsulemanarchie@gmail.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "maxodent@2026";
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// NVIDIA NIM (OpenAI-compatible) — used to AI-rewrite service descriptions.
+// Set NVIDIA_API_KEY in the environment (Render dashboard). Never commit it.
+const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
+const NVIDIA_MODEL = process.env.NVIDIA_MODEL || "meta/llama-3.1-8b-instruct";
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/lumina_dental';
 
 mongoose.connect(MONGO_URI)
@@ -65,6 +69,7 @@ mongoose.connect(MONGO_URI)
 const serviceSchema = new mongoose.Schema({
   title: String,
   description: String,
+  details: String,   // Long-form "Learn More" content
   image: String,
 });
 const Service = mongoose.model('Service', serviceSchema);
@@ -98,6 +103,78 @@ app.post('/api/admin/verify', (req, res) => {
   }
 });
 
+// Middleware: require a valid admin JWT (sent as "Authorization: Bearer <token>")
+const requireAdmin = (req, res, next) => {
+  const header = req.headers.authorization || '';
+  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
+  if (!token) {
+    return res.status(401).json({ error: "Authentication required." });
+  }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role !== 'admin') throw new Error('Not an admin');
+    req.admin = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: "Invalid or expired session." });
+  }
+};
+
+// --- AI: rewrite/improve a service description via NVIDIA NIM ---
+app.post('/api/ai/rewrite', requireAdmin, async (req, res) => {
+  try {
+    if (!NVIDIA_API_KEY) {
+      return res.status(500).json({ error: "AI is not configured on the server." });
+    }
+    const { title = '', text = '' } = req.body;
+    if (!text.trim()) {
+      return res.status(400).json({ error: "Nothing to rewrite." });
+    }
+
+    const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${NVIDIA_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: NVIDIA_MODEL,
+        temperature: 0.6,
+        max_tokens: 400,
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a professional medical copywriter for MaxoDent Dental Care Clinic. " +
+              "Rewrite the provided dental service description so it is clear, warm, trustworthy and patient-friendly. " +
+              "Keep it factual and concise (3-5 sentences). Do not invent prices, guarantees or medical claims. " +
+              "Return ONLY the rewritten description as plain text, with no preamble, headings or quotation marks.",
+          },
+          {
+            role: "user",
+            content: `Service title: ${title}\n\nCurrent description:\n${text}`,
+          },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      console.error("NVIDIA API error:", data);
+      return res.status(502).json({ error: data?.detail || data?.error || "AI service error." });
+    }
+
+    const improved = data?.choices?.[0]?.message?.content?.trim();
+    if (!improved) {
+      return res.status(502).json({ error: "AI returned an empty response." });
+    }
+    res.json({ text: improved });
+  } catch (err) {
+    console.error("AI rewrite error:", err);
+    res.status(500).json({ error: "Could not reach the AI service." });
+  }
+});
+
 // Gemini
 app.post("/api/gemini", async (req, res) => {
   try {
@@ -118,12 +195,12 @@ app.get('/api/services', async (req, res) => {
   res.json(services);
 });
 
-app.post('/api/services', upload.single('image'), async (req, res) => {
+app.post('/api/services', requireAdmin, upload.single('image'), async (req, res) => {
   try {
-    // 4. CHANGE: Cloudinary returns the URL in req.file.path
     const imageUrl = req.file ? req.file.path : '';
-    
-    const newService = new Service({ ...req.body, image: imageUrl });
+    const { title, description, details } = req.body;
+
+    const newService = new Service({ title, description, details, image: imageUrl });
     await newService.save();
     res.json(newService);
   } catch (error) {
@@ -131,7 +208,23 @@ app.post('/api/services', upload.single('image'), async (req, res) => {
   }
 });
 
-app.delete('/api/services/:id', async (req, res) => {
+// Update a service (e.g. add/edit the "Learn More" details). Image is optional —
+// when no new file is uploaded the existing image is kept.
+app.put('/api/services/:id', requireAdmin, upload.single('image'), async (req, res) => {
+  try {
+    const { title, description, details } = req.body;
+    const update = { title, description, details };
+    if (req.file) update.image = req.file.path;
+
+    const updated = await Service.findByIdAndUpdate(req.params.id, update, { new: true });
+    if (!updated) return res.status(404).json({ error: "Service not found" });
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: "Update failed" });
+  }
+});
+
+app.delete('/api/services/:id', requireAdmin, async (req, res) => {
   await Service.findByIdAndDelete(req.params.id);
   res.json({ success: true });
 });
@@ -142,7 +235,7 @@ app.get('/api/gallery', async (req, res) => {
   res.json(photos);
 });
 
-app.post('/api/gallery', upload.single('image'), async (req, res) => {
+app.post('/api/gallery', requireAdmin, upload.single('image'), async (req, res) => {
   try {
     // 4. CHANGE: Cloudinary returns the URL in req.file.path
     const imageUrl = req.file ? req.file.path : '';
@@ -155,7 +248,7 @@ app.post('/api/gallery', upload.single('image'), async (req, res) => {
   }
 });
 
-app.delete('/api/gallery/:id', async (req, res) => {
+app.delete('/api/gallery/:id', requireAdmin, async (req, res) => {
   await Gallery.findByIdAndDelete(req.params.id);
   res.json({ success: true });
 });

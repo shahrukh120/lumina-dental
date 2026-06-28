@@ -1,17 +1,30 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Stethoscope } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import API_BASE_URL from '../config'
 // 1. Define the shape of data coming from MongoDB
 interface Service {
   _id: string;
   title: string;
   description: string;
+  details?: string;
   image: string;
 }
 
 const Services: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
+  const [active, setActive] = useState<Service | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Lock body scroll while the detail modal is open
+  useEffect(() => {
+    document.body.style.overflow = active ? 'hidden' : '';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setActive(null);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [active]);
 
   // 2. Fetch services from the real database on load
   useEffect(() => {
@@ -78,7 +91,10 @@ const Services: React.FC = () => {
                   <p className="text-slate-600 mb-6 leading-relaxed text-sm font-light line-clamp-3">
                     {service.description}
                   </p>
-                  <button className="text-indigo-600 font-bold text-xs flex items-center gap-2 group-hover:gap-3 transition-all uppercase tracking-widest">
+                  <button
+                    onClick={() => setActive(service)}
+                    className="text-indigo-600 font-bold text-xs flex items-center gap-2 group-hover:gap-3 transition-all uppercase tracking-widest hover:text-indigo-800"
+                  >
                     Learn More
                     <ChevronRight size={14} />
                   </button>
@@ -109,6 +125,51 @@ const Services: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Service Detail Modal */}
+      {active && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-200"
+          onMouseDown={(e) => { if (e.target === e.currentTarget) setActive(null); }}
+        >
+          <div className="relative w-full max-w-2xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-200">
+            <button
+              onClick={() => setActive(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm text-slate-600 hover:text-slate-900 hover:bg-white shadow-md flex items-center justify-center transition-colors"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="h-56 sm:h-72 shrink-0 overflow-hidden">
+              <img src={active.image} alt={active.title} className="w-full h-full object-cover" />
+            </div>
+
+            <div className="p-8 overflow-y-auto">
+              <h3 className="serif text-3xl text-slate-900 mb-4 capitalize">{active.title}</h3>
+              <div className="text-slate-600 leading-relaxed whitespace-pre-line">
+                {active.details?.trim() || active.description}
+              </div>
+
+              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                <a
+                  href="#contact"
+                  onClick={() => setActive(null)}
+                  className="flex-1 bg-indigo-600 text-white text-center font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition-all shadow-brand"
+                >
+                  Book a Consultation
+                </a>
+                <a
+                  href="tel:+918791785177"
+                  className="flex-1 border border-slate-200 text-slate-700 text-center font-semibold py-3.5 rounded-xl hover:border-indigo-600 hover:text-indigo-600 transition-colors"
+                >
+                  Call +91 87917 85177
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
