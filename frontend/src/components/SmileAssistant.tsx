@@ -84,7 +84,7 @@ const SmileAssistant: React.FC = () => {
               </svg>
             </div>
             <div>
-              <h4 className="font-bold text-lg">Smile Consultant</h4>
+              <h4 className="font-bold text-lg">Maxillofacial Specialist</h4>
               <p className="text-xs text-indigo-100">Powered by Gemini 2.5 flash</p>
             </div>
           </div>
