@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import SmileAssistant from './components/SmileAssistant';
 import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
+import ScrollToTop from './components/ScrollToTop';
 import ClinicalEthics from './components/ClinicalEthics';
 import TermsOfCare from './components/TermsOfCare';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -116,6 +117,8 @@ const App: React.FC = () => {
 
           </Routes>
         </div>
+
+        <ScrollToTop />
       </div>
     </BrowserRouter>
   );
