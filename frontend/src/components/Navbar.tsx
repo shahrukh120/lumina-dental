@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Phone } from 'lucide-react';
+import { Phone, ShieldCheck } from 'lucide-react';
+import AdminLogin from './AdminLogin';
 
 interface NavbarProps {
   isScrolled: boolean;
@@ -9,6 +10,12 @@ const NAV_ITEMS = ['About', 'Services', 'Gallery', 'Testimonials', 'Contact'];
 
 const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const openAdminLogin = () => {
+    setIsMenuOpen(false);
+    setIsLoginOpen(true);
+  };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -42,6 +49,13 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
               {item}
             </a>
           ))}
+
+          <button
+            onClick={openAdminLogin}
+            className="text-[0.9rem] font-medium text-slate-600 hover:text-indigo-700 transition-colors"
+          >
+            Admin
+          </button>
 
           <div className="h-5 w-px bg-slate-200" aria-hidden="true"></div>
 
@@ -87,12 +101,19 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="py-3.5 text-[1.05rem] font-medium text-slate-700 hover:text-indigo-700 border-b border-slate-100 last:border-0 transition-colors"
+              className="py-3.5 text-[1.05rem] font-medium text-slate-700 hover:text-indigo-700 border-b border-slate-100 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               {item}
             </a>
           ))}
+
+          <button
+            onClick={openAdminLogin}
+            className="py-3.5 text-[1.05rem] font-medium text-slate-700 hover:text-indigo-700 text-left flex items-center gap-2 transition-colors"
+          >
+            <ShieldCheck size={17} className="text-gold-500" /> Admin Access
+          </button>
 
           <div className="flex flex-col gap-3 mt-5">
             <a
@@ -111,6 +132,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
           </div>
         </div>
       )}
+
+      {/* Secure Admin Login Modal */}
+      <AdminLogin isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </nav>
   );
 };

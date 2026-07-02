@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, LogOut, ArrowLeft, X, Upload, LayoutGrid, Stethoscope, Loader2, Pencil, Sparkles } from 'lucide-react';
+import { Plus, Trash2, LogOut, ArrowLeft, X, Upload, LayoutGrid, Stethoscope, Loader2, Pencil, Sparkles, Star, MessagesSquare } from 'lucide-react';
 import API_BASE_URL from '../config';
 
 interface Item {
@@ -11,9 +11,20 @@ interface Item {
   image: string;
 }
 
+interface Review {
+  _id: string;
+  name: string;
+  role?: string;
+  content: string;
+  stars: number;
+  createdAt?: string;
+}
+
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'services' | 'gallery'>('services');
+  const [activeTab, setActiveTab] = useState<'services' | 'gallery' | 'reviews'>('services');
   const [items, setItems] = useState<Item[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewTotal, setReviewTotal] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -43,11 +54,15 @@ const AdminDashboard: React.FC = () => {
   }, [activeTab]);
 
   const fetchItems = async () => {
-    const endpoint = activeTab === 'services' ? 'services' : 'gallery';
     try {
-      const res = await fetch(`${API_BASE_URL}/api/${endpoint}`);
+      const res = await fetch(`${API_BASE_URL}/api/${activeTab}`);
       const data = await res.json();
-      setItems(data);
+      if (activeTab === 'reviews') {
+        setReviews(Array.isArray(data.reviews) ? data.reviews : []);
+        setReviewTotal(typeof data.total === 'number' ? data.total : 0);
+      } else {
+        setItems(data);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -160,11 +175,11 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Delete this item?")) return;
-    const endpoint = activeTab === 'services' ? 'services' : 'gallery';
+    const label = activeTab === 'reviews' ? 'review' : 'item';
+    if (!window.confirm(`Delete this ${label}?`)) return;
     const token = localStorage.getItem('adminToken');
-    
-    await fetch(`${API_BASE_URL}/api/${endpoint}/${id}`, {
+
+    await fetch(`${API_BASE_URL}/api/${activeTab}/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` }
     });
@@ -204,22 +219,79 @@ const AdminDashboard: React.FC = () => {
           >
             <Stethoscope size={18} /> Services
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('gallery')}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${activeTab === 'gallery' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
           >
             <LayoutGrid size={18} /> Gallery
           </button>
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${activeTab === 'reviews' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+          >
+            <MessagesSquare size={18} /> Reviews
+          </button>
         </div>
 
-        {/* Add Button */}
-        <div className="flex justify-end mb-8">
-            <button onClick={openAdd} className="bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-slate-800 transition-all shadow-lg">
-              <Plus size={20} /> Add New {activeTab === 'services' ? 'Service' : 'Photo'}
-            </button>
-        </div>
+        {/* Add Button (not applicable to reviews — patients submit those) */}
+        {activeTab !== 'reviews' && (
+          <div className="flex justify-end mb-8">
+              <button onClick={openAdd} className="bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-slate-800 transition-all shadow-lg">
+                <Plus size={20} /> Add New {activeTab === 'services' ? 'Service' : 'Photo'}
+              </button>
+          </div>
+        )}
+
+        {/* Reviews List */}
+        {activeTab === 'reviews' && (
+          <>
+            <p className="text-sm text-slate-500 mb-6">
+              {reviewTotal} review{reviewTotal === 1 ? '' : 's'} submitted all-time · the newest {reviews.length} are stored &amp; shown on the website.
+              Deleting a review does not change the all-time count.
+            </p>
+
+            {reviews.length === 0 ? (
+              <div className="text-center py-20 text-slate-400 bg-white rounded-3xl border border-dashed border-slate-200">
+                No reviews yet. They'll appear here once patients submit them on the website.
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6">
+                {reviews.map((review) => (
+                  <div key={review._id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative group">
+                    <button
+                      onClick={() => handleDelete(review._id)}
+                      className="absolute top-5 right-5 p-2.5 bg-slate-50 text-red-500 rounded-xl hover:bg-red-500 hover:text-white shadow-sm transition-all"
+                      title="Delete review"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(Math.min(5, Math.max(1, review.stars || 5)))].map((_, i) => (
+                        <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <p className="text-slate-700 leading-relaxed mb-4 pr-10">"{review.content}"</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-bold text-slate-900">{review.name}</h4>
+                        {review.role && <p className="text-xs text-slate-400 uppercase tracking-wider mt-0.5">{review.role}</p>}
+                      </div>
+                      {review.createdAt && (
+                        <span className="text-xs text-slate-400">
+                          {new Date(review.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
 
         {/* Grid Display */}
+        {activeTab !== 'reviews' && (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((item) => (
             <div key={item._id} className="bg-white rounded-[2.5rem] p-4 shadow-sm border border-slate-100 group relative">
@@ -254,6 +326,7 @@ const AdminDashboard: React.FC = () => {
             </div>
           ))}
         </div>
+        )}
 
         {/* Dynamic Modal */}
         {isAdding && (
