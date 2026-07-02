@@ -325,4 +325,10 @@ app.post('/api/reviews', async (req, res) => {
   }
 });
 
+// Admin-only: remove a spam/abusive review (does not touch the all-time total)
+app.delete('/api/reviews/:id', requireAdmin, async (req, res) => {
+  await Review.findByIdAndDelete(req.params.id);
+  res.json({ success: true });
+});
+
 app.listen(3001, () => console.log("✅ Server running on port 3001"));
