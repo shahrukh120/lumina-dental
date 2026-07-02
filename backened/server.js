@@ -16,6 +16,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "http://localhost:3000",       // Vite dev server (frontend/vite.config.ts)
     "https://maxodent.co.in",                       // Primary custom domain
     "https://www.maxodent.co.in",                   // www custom domain
     "https://lumina-dental.vercel.app",
@@ -80,6 +81,23 @@ const gallerySchema = new mongoose.Schema({
   image: String,
 });
 const Gallery = mongoose.model('Gallery', gallerySchema);
+
+const reviewSchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true, maxlength: 60 },
+  role: { type: String, trim: true, maxlength: 60, default: '' },
+  content: { type: String, required: true, trim: true, maxlength: 500 },
+  stars: { type: Number, min: 1, max: 5, default: 5 },
+  createdAt: { type: Date, default: Date.now },
+});
+const Review = mongoose.model('Review', reviewSchema);
+
+// Running totals that survive document deletion (e.g. total reviews ever
+// submitted, even though only the latest MAX_STORED_REVIEWS are kept).
+const counterSchema = new mongoose.Schema({
+  key: { type: String, unique: true },
+  total: { type: Number, default: 0 },
+});
+const Counter = mongoose.model('Counter', counterSchema);
 
 
 // --- ROUTES ---
@@ -251,6 +269,60 @@ app.post('/api/gallery', requireAdmin, upload.single('image'), async (req, res) 
 app.delete('/api/gallery/:id', requireAdmin, async (req, res) => {
   await Gallery.findByIdAndDelete(req.params.id);
   res.json({ success: true });
+});
+
+// --- REVIEWS ENDPOINTS ---
+// Only the newest MAX_STORED_REVIEWS are kept in the database; the Counter
+// keeps the all-time total so the site can show "X patient reviews".
+const MAX_STORED_REVIEWS = 10;
+
+app.get('/api/reviews', async (req, res) => {
+  try {
+    const reviews = await Review.find().sort({ createdAt: -1 }).limit(MAX_STORED_REVIEWS);
+    const counter = await Counter.findOne({ key: 'reviews' });
+    const total = Math.max(counter?.total || 0, reviews.length);
+    res.json({ reviews, total });
+  } catch (err) {
+    console.error('Reviews fetch error:', err);
+    res.status(500).json({ error: 'Could not load reviews.' });
+  }
+});
+
+app.post('/api/reviews', async (req, res) => {
+  try {
+    const { name = '', role = '', content = '', stars = 5 } = req.body || {};
+    if (!String(name).trim() || !String(content).trim()) {
+      return res.status(400).json({ error: 'Name and review text are required.' });
+    }
+
+    const review = new Review({
+      name: String(name).trim().slice(0, 60),
+      role: String(role).trim().slice(0, 60),
+      content: String(content).trim().slice(0, 500),
+      stars: Math.min(5, Math.max(1, Number(stars) || 5)),
+    });
+    await review.save();
+
+    const counter = await Counter.findOneAndUpdate(
+      { key: 'reviews' },
+      { $inc: { total: 1 } },
+      { new: true, upsert: true }
+    );
+
+    // Trim storage down to the newest MAX_STORED_REVIEWS
+    const excess = await Review.find()
+      .sort({ createdAt: -1 })
+      .skip(MAX_STORED_REVIEWS)
+      .select('_id');
+    if (excess.length) {
+      await Review.deleteMany({ _id: { $in: excess.map(d => d._id) } });
+    }
+
+    res.json({ review, total: counter.total });
+  } catch (err) {
+    console.error('Review save error:', err);
+    res.status(500).json({ error: 'Could not save your review.' });
+  }
 });
 
 app.listen(3001, () => console.log("✅ Server running on port 3001"));
