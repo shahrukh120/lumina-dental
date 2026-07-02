@@ -17,12 +17,15 @@
   --color-indigo-800: #112d66;
   --color-indigo-900: #0c1f4a;
 
-  /* Bright accent blue — the "Dent" highlight from the logo */
-  --color-gold-50:  #eaf2ff;
-  --color-gold-100: #cfe1ff;
-  --color-gold-400: #3b82f6;
-  --color-gold-500: #2563eb;
-  --color-gold-600: #1d4ed8;
+  /* Warm gold accent — used sparingly: eyebrows, logo underline, ratings */
+  --color-gold-50:  #fbf7ee;
+  --color-gold-100: #f4e9d3;
+  --color-gold-200: #e8d4a8;
+  --color-gold-300: #d9bc77;
+  --color-gold-400: #c9a254;
+  --color-gold-500: #b98a3e;
+  --color-gold-600: #9c7030;
+  --color-gold-700: #7c5726;
 }
 
 /* Body type refinements */
@@ -32,5 +35,22 @@ body {
 
 /* Slight refinement to default heading weight & tracking for serif */
 h1, h2, h3 {
-  font-weight: 600;
+  font-weight: 500;
+}
+
+@layer components {
+  /* Small uppercase kicker above section headings, with a gold rule */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-gold-600;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply block w-8 h-px bg-gold-400;
+  }
+  .eyebrow-center::before { @apply hidden; }
+
+  /* Display heading for sections */
+  .display-h2 {
+    @apply font-serif text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.12] text-slate-900;
+  }
 }

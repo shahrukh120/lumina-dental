@@ -55,7 +55,7 @@ const SmileAssistant: React.FC = () => {
       {/* Floating Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-8 right-8 z-[60] w-16 h-16 bg-indigo-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform active:scale-95 group"
+        className="fixed bottom-20 right-5 md:bottom-8 md:right-8 z-[60] w-14 h-14 md:w-16 md:h-16 bg-indigo-700 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform active:scale-95 group"
       >
         {isOpen ? (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -75,17 +75,18 @@ const SmileAssistant: React.FC = () => {
       </button>
 
       {/* Assistant Modal */}
-      <div className={`fixed bottom-28 right-8 z-[60] w-[90vw] sm:w-[400px] h-[500px] bg-white rounded-3xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none'}`}>
-        <div className="bg-indigo-600 p-6 text-white shrink-0">
+      <div className={`fixed bottom-36 right-5 md:bottom-28 md:right-8 z-[60] w-[calc(100vw-2.5rem)] sm:w-[400px] h-[min(500px,60vh)] md:h-[500px] bg-white rounded-3xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none'}`}>
+        <div className="bg-indigo-900 p-5 text-white shrink-0 relative">
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-gold-400/60 to-transparent"></div>
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div>
-              <h4 className="font-bold text-lg">Maxillofacial Specialist</h4>
-              <p className="text-xs text-indigo-100">Powered by Gemini 2.5 flash</p>
+              <h4 className="serif text-lg">Maxillofacial Specialist</h4>
+              <p className="text-xs text-indigo-200">Virtual assistant · Powered by AI</p>
             </div>
           </div>
         </div>
@@ -95,7 +96,7 @@ const SmileAssistant: React.FC = () => {
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[85%] p-4 rounded-2xl text-sm ${
                 msg.role === 'user' 
-                  ? 'bg-indigo-600 text-white rounded-tr-none' 
+                  ? 'bg-indigo-700 text-white rounded-tr-none' 
                   : 'bg-white text-slate-700 shadow-sm rounded-tl-none border border-slate-200'
               }`}>
                 {/* 2. REPLACED TEXT WITH REACT MARKDOWN COMPONENT */}
@@ -137,7 +138,7 @@ const SmileAssistant: React.FC = () => {
           <button 
             type="submit" 
             disabled={isLoading}
-            className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-colors disabled:opacity-50"
+            className="w-10 h-10 bg-indigo-700 text-white rounded-xl flex items-center justify-center hover:bg-indigo-800 transition-colors disabled:opacity-50"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

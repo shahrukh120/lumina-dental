@@ -17,6 +17,7 @@ import ClinicalEthics from './components/ClinicalEthics';
 import TermsOfCare from './components/TermsOfCare';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Reveal from './components/Reveal';
+import MobileActionBar from './components/MobileActionBar';
 
 const LandingPage: React.FC<{ isScrolled: boolean }> = ({ isScrolled }) => (
   <>
@@ -29,9 +30,12 @@ const LandingPage: React.FC<{ isScrolled: boolean }> = ({ isScrolled }) => (
       <Reveal><Testimonials /></Reveal>
       <Reveal><Contact /></Reveal>
     </main>
-    
+
     <SmileAssistant />
     <Footer />
+    {/* Spacer so the fixed action bar never covers footer content on mobile */}
+    <div className="h-16 md:hidden" aria-hidden="true" />
+    <MobileActionBar />
   </>
 );
 

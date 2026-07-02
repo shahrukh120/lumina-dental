@@ -31,16 +31,16 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-12 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20">
+    <section id="contact" className="py-20 lg:py-28 bg-white scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
 
           {/* LEFT COLUMN: Contact Info & Map */}
           <div className="flex flex-col h-full">
-            <span className="text-indigo-600 font-bold tracking-widest uppercase text-xs mb-4 block">Get In Touch</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8">Ready for Your <br /> <span className="serif italic font-normal text-indigo-400">New Smile?</span></h2>
-            <p className="text-lg text-slate-600 mb-10 font-light leading-relaxed">
-              Dr. Md S T Khan is most responsive via his **WhatsApp Business** account for quick consultations and appointment scheduling.
+            <span className="eyebrow mb-4">Get In Touch</span>
+            <h2 className="display-h2 mb-7">Ready for your <br /> <span className="italic text-indigo-700">new smile?</span></h2>
+            <p className="text-base sm:text-lg text-slate-600 mb-10 leading-relaxed">
+              Dr. Md S T Khan is most responsive on <span className="font-semibold text-slate-900">WhatsApp Business</span> for quick consultations and appointment scheduling.
             </p>
 
             <div className="space-y-8 mb-10">
@@ -105,8 +105,8 @@ const Contact: React.FC = () => {
             {/* Maps for both clinics */}
             <div className="grid sm:grid-cols-2 gap-4 mt-auto">
               <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Main Clinic</p>
-                <div className="w-full h-56 rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] mb-2 ml-1">Main Clinic</p>
+                <div className="w-full h-56 rounded-2xl overflow-hidden shadow-sm border border-slate-200/70">
                   <iframe
                     title="Main Clinic Location"
                     src="https://maps.google.com/maps?q=Apoorva+Hospital+And+Research+Centre+Pvt+Ltd+Ballia&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -117,8 +117,8 @@ const Contact: React.FC = () => {
                 </div>
               </div>
               <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Baheri Clinic</p>
-                <div className="w-full h-56 rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] mb-2 ml-1">Baheri Clinic</p>
+                <div className="w-full h-56 rounded-2xl overflow-hidden shadow-sm border border-slate-200/70">
                   <iframe
                     title="Baheri Clinic Location"
                     src="https://maps.google.com/maps?q=25.757378,84.143394&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -133,29 +133,29 @@ const Contact: React.FC = () => {
           </div>
 
           {/* RIGHT COLUMN: Contact Form */}
-          <div className="bg-slate-50 p-6 sm:p-10 lg:p-16 rounded-[2.5rem] shadow-sm border border-slate-100 h-fit">
+          <div className="bg-slate-50/80 p-6 sm:p-10 lg:p-12 rounded-3xl shadow-sm border border-slate-200/70 h-fit">
             <form className="space-y-5" onSubmit={handleWhatsAppSubmit}>
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">First Name</label>
-                  <input required type="text" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="Enter first name" />
+                  <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] ml-1">First Name</label>
+                  <input required type="text" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-300 outline-none transition-all" placeholder="Enter first name" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Last Name</label>
-                  <input required type="text" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="Enter last name" />
+                  <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] ml-1">Last Name</label>
+                  <input required type="text" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-300 outline-none transition-all" placeholder="Enter last name" />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
-                <input required type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="your@email.com" />
+                <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] ml-1">Email Address</label>
+                <input required type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-300 outline-none transition-all" placeholder="your@email.com" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Service Required</label>
+                <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] ml-1">Service Required</label>
                 <select 
                   required 
                   value={formData.service} 
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })} 
-                  className={`w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all appearance-none cursor-pointer ${formData.service === "" ? "text-slate-400" : "text-slate-900"}`}
+                  className={`w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-300 outline-none transition-all appearance-none cursor-pointer ${formData.service === "" ? "text-slate-400" : "text-slate-900"}`}
                 >
                   {/* UPDATED: Added placeholder option */}
                   <option value="" disabled>Select Services</option>
@@ -185,10 +185,10 @@ const Contact: React.FC = () => {
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Additional Notes</label>
-                <textarea required rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all resize-none" placeholder="Briefly describe your dental concern..."></textarea>
+                <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em] ml-1">Additional Notes</label>
+                <textarea required rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-300 outline-none transition-all resize-none" placeholder="Briefly describe your dental concern..."></textarea>
               </div>
-              <button type="submit" className="w-full bg-green-600 text-white font-bold py-4 rounded-2xl shadow-xl shadow-green-100 hover:bg-green-700 transition-all hover:-translate-y-1 flex items-center justify-center gap-2">
+              <button type="submit" className="w-full bg-green-600 text-white font-semibold py-4 rounded-xl shadow-lg shadow-green-100 hover:bg-green-700 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
                 <MessageSquare size={20} /> Request via WhatsApp
               </button>
             </form>

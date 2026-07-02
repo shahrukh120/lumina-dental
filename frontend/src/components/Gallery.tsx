@@ -44,26 +44,26 @@ const Gallery: React.FC = () => {
   const displayItems = filteredItems.slice(0, 6);
 
   return (
-    <section id="gallery" className="py-24 bg-white scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+    <section id="gallery" className="py-20 lg:py-28 bg-white scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 lg:mb-16 gap-8">
           <div className="max-w-xl">
-            <span className="text-indigo-600 font-bold tracking-widest uppercase text-xs mb-4 block">Visual Excellence</span>
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">Our Environment & <span className="serif italic font-normal text-indigo-400">Real Results.</span></h2>
-            <p className="text-slate-600 font-light">See the technology we use and the transformations we achieve every single day.</p>
+            <span className="eyebrow mb-4">Inside the Clinic</span>
+            <h2 className="display-h2 mb-4">Our environment &amp; <span className="italic text-indigo-700">real results.</span></h2>
+            <p className="text-slate-600">See the technology we use and the transformations we achieve every day.</p>
           </div>
-          
-          <div 
-            className="flex bg-slate-100 p-1.5 rounded-2xl overflow-x-auto w-full md:w-auto max-w-full"
+
+          <div
+            className="flex bg-slate-100 p-1.5 rounded-full overflow-x-auto w-full md:w-auto max-w-full"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveTab(cat)}
-                className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
-                  activeTab === cat 
-                    ? 'bg-white text-indigo-600 shadow-sm' 
+                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+                  activeTab === cat
+                    ? 'bg-white text-indigo-700 shadow-sm'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
@@ -79,22 +79,22 @@ const Gallery: React.FC = () => {
             No photos in gallery yet. Add some from the Admin Console!
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {displayItems.map(item => (
-              <div 
-                key={item._id} 
+              <div
+                key={item._id}
                 onClick={() => setSelectedImage(item)}
-                className="group relative rounded-[2.5rem] overflow-hidden aspect-square cursor-pointer border border-slate-100 shadow-sm"
+                className="group relative rounded-2xl overflow-hidden aspect-square cursor-pointer border border-slate-200/70 shadow-sm"
               >
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 sm:p-8">
                   <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <span className="text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-2 block">{item.category}</span>
-                    <h4 className="text-white text-xl font-bold">{item.title}</h4>
+                    <span className="text-gold-300 text-[10px] font-semibold uppercase tracking-[0.18em] mb-1.5 block">{item.category}</span>
+                    <h4 className="text-white text-lg sm:text-xl font-semibold">{item.title}</h4>
                   </div>
                 </div>
               </div>
@@ -105,9 +105,9 @@ const Gallery: React.FC = () => {
         {/* BUTTON: Opens the Full Gallery Modal */}
         {filteredItems.length > 6 && (
           <div className="mt-16 flex justify-center">
-            <button 
+            <button
               onClick={() => setIsExpanded(true)}
-              className="group flex items-center gap-3 bg-white border-2 border-slate-200 text-slate-900 px-10 py-4 rounded-full font-bold hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 shadow-xl shadow-slate-200/50"
+              className="group flex items-center gap-3 bg-white border border-slate-300 text-slate-900 px-10 py-4 rounded-full font-semibold hover:bg-indigo-900 hover:text-white hover:border-indigo-900 transition-all duration-300 shadow-lg shadow-slate-200/60"
             >
               Explore Full Gallery
               <Maximize2 size={18} className="group-hover:rotate-90 transition-transform duration-500" />
@@ -120,10 +120,10 @@ const Gallery: React.FC = () => {
           <div className="fixed inset-0 z-[100] bg-white overflow-y-auto px-6 py-12 animate-in fade-in zoom-in duration-300">
             <div className="max-w-7xl mx-auto">
               <div className="flex justify-between items-center mb-16">
-                <h2 className="text-3xl font-bold text-slate-900">Full Clinical <span className="serif italic font-normal text-indigo-600">Portfolio</span></h2>
-                <button 
+                <h2 className="serif text-2xl sm:text-3xl text-slate-900">Full clinical <span className="italic text-indigo-700">portfolio</span></h2>
+                <button
                   onClick={() => setIsExpanded(false)}
-                  className="p-4 rounded-full bg-slate-100 text-slate-900 hover:bg-indigo-600 hover:text-white transition-all shadow-lg"
+                  className="p-4 rounded-full bg-slate-100 text-slate-900 hover:bg-indigo-700 hover:text-white transition-all shadow-lg"
                 >
                   <X size={24} />
                 </button>
@@ -172,8 +172,8 @@ const Gallery: React.FC = () => {
                 className="max-h-[80vh] w-auto object-contain rounded-lg shadow-2xl" 
               />
               <div className="mt-6 text-center">
-                <span className="text-indigo-400 text-sm font-bold uppercase tracking-widest">{selectedImage.category}</span>
-                <h3 className="text-white text-2xl font-bold mt-2">{selectedImage.title}</h3>
+                <span className="text-gold-300 text-xs font-semibold uppercase tracking-[0.18em]">{selectedImage.category}</span>
+                <h3 className="serif text-white text-2xl mt-2">{selectedImage.title}</h3>
               </div>
             </div>
           </div>
