@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
@@ -41,6 +41,7 @@ const LandingPage: React.FC<{ isScrolled: boolean }> = ({ isScrolled }) => (
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,6 +64,7 @@ const App: React.FC = () => {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
 
     let rafId: number;
     const raf = (time: number) => {
@@ -74,6 +76,40 @@ const App: React.FC = () => {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  // Deep links like /#testimonials (e.g. from a printed QR code): the browser's
+  // native anchor jump fires before React renders the sections, so scroll there
+  // ourselves. Retry a few times because section positions shift as API data
+  // (services/gallery) loads in; stop as soon as the user scrolls on their own.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+
+    let cancelled = false;
+    const cancel = () => { cancelled = true; };
+    window.addEventListener('wheel', cancel, { passive: true });
+    window.addEventListener('touchstart', cancel, { passive: true });
+
+    const scrollToHash = () => {
+      if (cancelled) return;
+      const el = document.getElementById(hash);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80; // navbar offset (scroll-mt-20)
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(top, { immediate: true });
+      } else {
+        window.scrollTo(0, top);
+      }
+    };
+
+    const timers = [150, 700, 1600, 2800].map((t) => setTimeout(scrollToHash, t));
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener('wheel', cancel);
+      window.removeEventListener('touchstart', cancel);
     };
   }, []);
 
